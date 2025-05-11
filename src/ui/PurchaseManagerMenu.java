@@ -5,17 +5,20 @@
 package ui;
 
 import javax.swing.JOptionPane;
+import models.User;
 
 /**
  *
  * @author lunwe
  */
 public class PurchaseManagerMenu extends javax.swing.JFrame {
+    private User user;
 
     /**
      * Creates new form PurchaseManagerMenu
      */
-    public PurchaseManagerMenu() {
+    public PurchaseManagerMenu(User user) {
+        this.user = user;
         initComponents();
     }
 
@@ -40,6 +43,7 @@ public class PurchaseManagerMenu extends javax.swing.JFrame {
         Patientitle = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
         btnQuit1 = new javax.swing.JButton();
+        Patientitle1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -146,6 +150,9 @@ public class PurchaseManagerMenu extends javax.swing.JFrame {
             }
         });
 
+        Patientitle1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Patientitle1.setText("Welcome, " + user.getName());
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -166,7 +173,9 @@ public class PurchaseManagerMenu extends javax.swing.JFrame {
                                 .addGap(87, 87, 87))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addComponent(Patientitle, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Patientitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Patientitle, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -175,7 +184,9 @@ public class PurchaseManagerMenu extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(49, Short.MAX_VALUE)
                 .addComponent(Patientitle)
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Patientitle1)
+                .addGap(9, 9, 9)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -264,6 +275,7 @@ public class PurchaseManagerMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Patientitle;
+    private javax.swing.JLabel Patientitle1;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnQuit1;
     private javax.swing.JButton jButton1;

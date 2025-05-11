@@ -5,17 +5,20 @@
 package ui;
 
 import javax.swing.JOptionPane;
+import models.User;
 
 /**
  *
  * @author lunwe
  */
 public class SalesManagerMenu extends javax.swing.JFrame {
-
+    private User user;
+    
     /**
      * Creates new form SalesManagerMenu
      */
-    public SalesManagerMenu() {
+    public SalesManagerMenu(User user) {
+        this.user = user;
         initComponents();
     }
 
@@ -44,6 +47,7 @@ public class SalesManagerMenu extends javax.swing.JFrame {
         Patientitle = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
         btnQuit1 = new javax.swing.JButton();
+        Patientitle1 = new javax.swing.JLabel();
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/login/OSWBlogo.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -177,6 +181,9 @@ public class SalesManagerMenu extends javax.swing.JFrame {
             }
         });
 
+        Patientitle1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Patientitle1.setText("Welcome, " + user.getName());
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -193,11 +200,13 @@ public class SalesManagerMenu extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(Patientitle, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(75, 75, 75)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Patientitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Patientitle, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(103, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -206,6 +215,8 @@ public class SalesManagerMenu extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addComponent(Patientitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Patientitle1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -306,6 +317,7 @@ public class SalesManagerMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Patientitle;
+    private javax.swing.JLabel Patientitle1;
     private javax.swing.JLabel WelcomeCap;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnQuit;

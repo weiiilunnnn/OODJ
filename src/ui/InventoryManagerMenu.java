@@ -5,17 +5,20 @@
 package ui;
 
 import javax.swing.JOptionPane;
+import models.User;
 
 /**
  *
  * @author lunwe
  */
 public class InventoryManagerMenu extends javax.swing.JFrame {
+    private User user;
 
     /**
      * Creates new form InventoryManagerMenu
      */
-    public InventoryManagerMenu() {
+    public InventoryManagerMenu(User user) {
+        this.user = user;
         initComponents();
     }
 
@@ -39,6 +42,7 @@ public class InventoryManagerMenu extends javax.swing.JFrame {
         btnLogout = new javax.swing.JButton();
         btnQuit1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        Patientitle1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,6 +139,9 @@ public class InventoryManagerMenu extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/InventoryManager.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
+        Patientitle1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Patientitle1.setText("Welcome, " + user.getName());
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -155,7 +162,9 @@ public class InventoryManagerMenu extends javax.swing.JFrame {
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(26, 26, 26)
-                                .addComponent(Patientitle, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Patientitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Patientitle, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(98, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -164,7 +173,9 @@ public class InventoryManagerMenu extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(Patientitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Patientitle1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -249,6 +260,7 @@ public class InventoryManagerMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Patientitle;
+    private javax.swing.JLabel Patientitle1;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnQuit1;
     private javax.swing.JButton jButton1;
