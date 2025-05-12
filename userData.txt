@@ -1,2 +1,7 @@
-001123,Joshua,123,Admin,email@example.com,0123456789
-45454,Julie,123,Purchase Manager,email@gdhd,0121211
+AM001,Joshua,123,Admin,john111@example.com,0123456789
+PM001,Julie,123,Purchase Manager,julie@gmail.com,012-1211444
+SM001,Wei,1234,Sales Manager,wei@mail.com,019-7871444
+SM002,Chantalle,123,Sales Manager,chantalle@mail.com,019-7784444
+FM001,Wendy,123,Finance Manager,wennddy@gmail.com,019-7784444
+SM003,Messi,123,Sales Manager,messi@mail.com,018-7747777
+IM001,Tasha,123,Inventory Manager,tasha@mail.com,017-7747774

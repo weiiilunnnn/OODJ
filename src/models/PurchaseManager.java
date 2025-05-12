@@ -11,12 +11,14 @@ import ui.PurchaseManagerMenu;
  * @author lunwe
  */
 public class PurchaseManager extends User{
+    private User user;
+    
     public PurchaseManager(String userId, String name, String password, String role, String contactNumber, String email) {
         super(userId, name, password, "Purchase Manager", contactNumber, email);
     }
 
     @Override
     public void accessMenu() {
-        new PurchaseManagerMenu().setVisible(true);
+        new PurchaseManagerMenu(user).setVisible(true);
     }
 }

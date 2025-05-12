@@ -12,12 +12,14 @@ import ui.SalesManagerMenu;
  * @author lunwe
  */
 public class SalesManager extends User{
+    private User user;
+    
     public SalesManager(String userId, String name, String password, String role, String contactNumber, String email) {
         super(userId, name, password, "Sales Manager", contactNumber, email);
     }
 
     @Override
     public void accessMenu() {
-        new SalesManagerMenu().setVisible(true);
+        new SalesManagerMenu(user).setVisible(true);
     }
 }

@@ -13,6 +13,6 @@ public class PurchaseOrder {
     private String requisitionID;
     private String itemCode;
     private int quantity;
-    private String purchaseManagerID;
+    private String userID;
     private boolean approvedByFinance;
 }

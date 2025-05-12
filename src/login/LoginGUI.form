@@ -3,6 +3,7 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="OSWB"/>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="ff" green="ff" red="ff" type="rgb"/>
     </Property>
@@ -192,7 +193,7 @@
                 <StringItem index="1" value="Sales Manager"/>
                 <StringItem index="2" value="Purchase Manager"/>
                 <StringItem index="3" value="Inventory Manager"/>
-                <StringItem index="4" value="Financial Manager"/>
+                <StringItem index="4" value="Finance Manager"/>
                 <StringItem index="5" value="Admin"/>
               </StringArray>
             </Property>

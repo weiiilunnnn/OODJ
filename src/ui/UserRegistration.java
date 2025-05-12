@@ -5,7 +5,6 @@
 package ui;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -23,16 +22,20 @@ import models.User;
  */
 public class UserRegistration extends javax.swing.JFrame {
     ArrayList<User> userList = new ArrayList<>();
-    private User user;
+    private final User user;
+    private boolean isRegistering = true;
+    
     /**
      * Creates new form CustomerForm
-     * @param admin
+     * @param user
      */
+    
     public UserRegistration(User user) {
         this.user = user;
         initComponents();
         loadUsersFromFile();
         setLocationRelativeTo(null);
+        txtUserID.setEnabled(false);
     }
     
     private void loadUsersFromFile() {
@@ -71,56 +74,40 @@ public class UserRegistration extends javax.swing.JFrame {
     
     private void updateUserDataFile() {
         try {
-            File file = new File("userData.txt");
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-            ArrayList<String> fileContent = new ArrayList<>();
+            BufferedWriter bw = new BufferedWriter(new FileWriter("userData.txt"));
 
-            // Read the file content into memory
-            while ((line = br.readLine()) != null) {
-                fileContent.add(line);
-            }
-            br.close();
-
-            // Find and update the specific user data in memory
-            for (int i = 0; i < fileContent.size(); i++) {
-                String currentLine = fileContent.get(i);
-                String[] userData = currentLine.split(","); // Assuming CSV format
-
-                if (userData[0].equalsIgnoreCase(txtUserID.getText())) {
-                    // We found the user, now update this line with the new data
-                    String updatedLine = txtUserID.getText() + "," +
-                            txtName.getText() + "," +
-                            txtPassword.getText() + "," +
-                            boxRole.getSelectedItem().toString() + "," +
-                            txtContactNumber.getText() + "," +
-                            txtEmail.getText();
-                    fileContent.set(i, updatedLine);  // Replace the old line with the updated one
-                    break;  // Exit the loop once we update the user
-                }
-            }
-
-            // Write the updated content back to the file
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            for (String updatedLine : fileContent) {
-                bw.write(updatedLine);
+            for (User user : userList) {
+                String line = user.getUserID() + "," +
+                              user.getName() + "," +
+                              user.getPassword() + "," +
+                              user.getRole() + "," +
+                              user.getContactNumber() + "," +
+                              user.getEmail();
+                bw.write(line);
                 bw.newLine();
             }
-            bw.close();
 
+            bw.close();
         } catch (IOException e) {
-            System.out.println("Error altering user data: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error updating user data file: " + e.getMessage());
         }
     }
     
     private void setEmpty() {
-        txtUserID.setEnabled(true);
-        txtUserID.setText("");
         txtName.setText("");
         txtPassword.setText("");
-        boxRole.setSelectedIndex(0); // reset to first item in the dropdown
         txtContactNumber.setText("");
         txtEmail.setText("");
+        txtSearch.setText("");
+
+        // Reset combo box to default first
+        boxRole.setSelectedIndex(0);
+
+        // Clear User ID
+        txtUserID.setText("");
+        txtUserID.setEnabled(false);
+        isRegistering = true;
+        
     }
     
     private boolean validateUserFields() {
@@ -136,6 +123,32 @@ public class UserRegistration extends javax.swing.JFrame {
         }
         return true;
     }
+    
+    private String generateNextUserID(String prefix) {
+        String fileName = "userData.txt"; // Adjust to your actual file path
+        int max = 0;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length > 0 && parts[0].startsWith(prefix)) {
+                    String numberPart = parts[0].substring(prefix.length());
+                    try {
+                        int number = Integer.parseInt(numberPart);
+                        if (number > max) {
+                            max = number;
+                        }
+                    } catch (NumberFormatException ignored) {}
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+
+        return prefix + String.format("%03d", max + 1);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -188,7 +201,7 @@ public class UserRegistration extends javax.swing.JFrame {
         Backbutton1.setPreferredSize(new java.awt.Dimension(82, 23));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Customer Form");
+        setTitle("User Registration");
 
         jPanel1.setBackground(new java.awt.Color(102, 204, 255));
 
@@ -273,6 +286,11 @@ public class UserRegistration extends javax.swing.JFrame {
         jLabel17.setText("Role");
 
         boxRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Role", "Sales Manager", "Purchase Manager", "Inventory Manager", "Finance Manager", "Admin" }));
+        boxRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxRoleActionPerformed(evt);
+            }
+        });
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel18.setText("User ID ");
@@ -551,16 +569,18 @@ public class UserRegistration extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        txtUserID.setEnabled(false); // Optional: prevent editing UserID while viewing
-    
-        loadUsersFromFile();
-        
-        String searchID = txtSearch.getText();
+        isRegistering = false;  // Set isRegistering to false as we're searching, not registering
+        txtUserID.setEnabled(false);  // Make the User ID field non-editable while searching
+
+        loadUsersFromFile();  // Load user data from file
+
+        String searchID = txtSearch.getText();  // Get the search term (User ID)
         boolean found = false;
 
+        // Search for the user by User ID
         for (User user : userList) {
             if (user.getUserID().equalsIgnoreCase(searchID)) {
-                txtUserID.setText(user.getUserID());
+                txtUserID.setText(user.getUserID());  // Populate User ID from existing user
                 txtName.setText(user.getName());
                 txtPassword.setText(user.getPassword());
                 boxRole.setSelectedItem(user.getRole());
@@ -573,13 +593,12 @@ public class UserRegistration extends javax.swing.JFrame {
 
         if (!found) {
             JOptionPane.showMessageDialog(this, "User ID not found.");
-            txtUserID.setEnabled(true);
+            txtUserID.setEnabled(true);  // Allow editing if not found
         }
-       
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtSearchActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
@@ -681,6 +700,33 @@ public class UserRegistration extends javax.swing.JFrame {
         this.dispose();
         new AdminMenu(user).setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void boxRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxRoleActionPerformed
+        if (!isRegistering) {
+            return;  // Skip generating User ID if we're not registering
+        }
+
+        String selectedRole = (String) boxRole.getSelectedItem();
+        String prefix = "";
+
+        // Assign a prefix based on the role
+        switch (selectedRole) {
+            case "Admin" -> prefix = "AM";
+            case "Finance Manager" -> prefix = "FM";
+            case "Sales Manager" -> prefix = "SM";
+            case "Purchase Manager" -> prefix = "PM";
+            case "Inventory Manager" -> prefix = "IM";
+            default -> {
+                txtUserID.setText("");  // Clear User ID if no valid role is selected
+                return;  // Exit if no valid role is selected
+            }
+        }
+
+        // Generate and set the next User ID
+        String newUserID = generateNextUserID(prefix);
+        txtUserID.setText(newUserID);  // Set the new User ID
+        txtUserID.setEditable(false);
+    }//GEN-LAST:event_boxRoleActionPerformed
     
     
     /**

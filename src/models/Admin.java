@@ -16,13 +16,21 @@ import ui.AdminMenu;
  * @author lunwe
  */
 public class Admin extends User{
+    private User user;
+    
     public Admin(String userId, String name, String password, String role, String contactNumber, String email) {
        super(userId, name, password, "Admin", contactNumber, email);
     }
+    
+    public Admin(){};
+    
+    public Admin(String userId, String name){
+        super(userId, name);
+    };
      
     @Override
     public void accessMenu() {
-        new AdminMenu().setVisible(true);
+        new AdminMenu(user).setVisible(true);
     }
     
      @Override
@@ -30,23 +38,7 @@ public class Admin extends User{
         // Admin has no specific extra data, so leave it blank or log role if needed
     }
 
-    // Method to create a Sales Manager
-    public SalesManager registerSalesManager(String userId, String name, String password, String contactNumber, String email) {
-        return new SalesManager(userId, name, password, "Sales Manager", contactNumber, email);
-    }
-    
-    public SalesManager registerPurchaseManager(String userId, String name, String password, String contactNumber, String email) {
-        return new SalesManager(userId, name, password, "Purchase Manager", contactNumber, email);
-    }
-    
-    public SalesManager registerInventoryManager(String userId, String name, String password, String contactNumber, String email) {
-        return new SalesManager(userId, name, password, "Inventory Manager", contactNumber, email);
-    }
-    
-    public SalesManager registerFinanceManager(String userId, String name, String password, String contactNumber, String email) {
-        return new SalesManager(userId, name, password, "Finance Manager", contactNumber, email);
-    }
-    
+    // Method to create a New user
     public void registerNewUser(User user) {
         File file = new File("userData.txt");
 

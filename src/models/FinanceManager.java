@@ -11,12 +11,14 @@ import ui.FinanceManagerMenu;
  * @author lunwe
  */
 public class FinanceManager extends User{
+    private User user;
+    
     public FinanceManager(String userId, String name, String password, String role, String contactNumber, String email) {
         super(userId, name, password, "Finance Manager", contactNumber, email);
     }
 
     @Override
     public void accessMenu() {
-        new FinanceManagerMenu().setVisible(true);
+        new FinanceManagerMenu(user).setVisible(true);
     }
 }

@@ -11,12 +11,14 @@ import ui.InventoryManagerMenu;
  * @author lunwe
  */
 public class InventoryManager extends User{
+    private User user;
+    
     public InventoryManager(String userId, String name, String password, String role, String contactNumber, String email) {
         super(userId, name, password, "Inventory Manager", contactNumber, email);
     }
 
     @Override
     public void accessMenu() {
-        new InventoryManagerMenu().setVisible(true);
+        new InventoryManagerMenu(user).setVisible(true);
     }
 }

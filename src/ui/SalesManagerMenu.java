@@ -5,6 +5,7 @@
 package ui;
 
 import javax.swing.JOptionPane;
+import login.LoginGUI;
 import models.User;
 
 /**
@@ -20,6 +21,7 @@ public class SalesManagerMenu extends javax.swing.JFrame {
     public SalesManagerMenu(User user) {
         this.user = user;
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -65,6 +67,7 @@ public class SalesManagerMenu extends javax.swing.JFrame {
         WelcomeCap.setText("WELCOME TO PATIENT'S MAIN PAGE!");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sales Manager Menu");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -263,7 +266,12 @@ public class SalesManagerMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-
+        int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to Log Out?", "Log Out", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            LoginGUI login = new LoginGUI();
+            this.dispose();
+            login.setVisible(true);
+        }
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitActionPerformed

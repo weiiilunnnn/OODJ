@@ -5,6 +5,7 @@
 package ui;
 
 import javax.swing.JOptionPane;
+import login.LoginGUI;
 import models.User;
 
 /**
@@ -20,6 +21,7 @@ public class PurchaseManagerMenu extends javax.swing.JFrame {
     public PurchaseManagerMenu(User user) {
         this.user = user;
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -46,6 +48,7 @@ public class PurchaseManagerMenu extends javax.swing.JFrame {
         Patientitle1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Purchase Manager Menu");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -228,7 +231,12 @@ public class PurchaseManagerMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        
+        int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to Log Out?", "Log Out", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            LoginGUI login = new LoginGUI();
+            this.dispose();
+            login.setVisible(true);
+        }
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnQuit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuit1ActionPerformed

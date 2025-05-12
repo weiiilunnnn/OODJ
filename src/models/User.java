@@ -15,13 +15,12 @@ import java.io.PrintWriter;
  * @author lunwe
  */
 public abstract class User {
-    protected String UserID;
-    protected String Name;
-    protected String Password;
-    protected String role;
-    protected String contactNumber;
-    protected String email;
-    private static final String USER_DATA_FILE = "userData.txt";
+    private String UserID;
+    private String Name;
+    private String Password;
+    private String role;
+    private String contactNumber;
+    private String email;
     
     
     public abstract void accessMenu();
@@ -110,35 +109,5 @@ public abstract class User {
         this.email = email;
     }
     
-    public void registerNewUser(User user) {
-        File file = new File(USER_DATA_FILE);
-
-        // Create file if it doesn't exist
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-                System.out.println("userData.txt created during registration.");
-            } catch (IOException e) {
-                System.err.println("Failed to create userData.txt: " + e.getMessage());
-                return;
-            }
-        }
-
-        // Append new user to the file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-            String dataLine = String.join(",",
-                user.getUserID(),
-                user.getName(),
-                user.getPassword(),
-                user.getRole(),
-                user.getEmail(),
-                user.getContactNumber()
-            );
-            writer.write(dataLine);
-            writer.newLine();
-            System.out.println("User registered successfully.");
-        } catch (IOException e) {
-            System.err.println("Failed to write to userData.txt: " + e.getMessage());
-        }
-    }
+    
 }

@@ -5,6 +5,7 @@
 package ui;
 
 import javax.swing.JOptionPane;
+import login.LoginGUI;
 import models.Admin;
 
 import models.User;
@@ -46,6 +47,7 @@ public class AdminMenu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Admin Menu");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -177,7 +179,12 @@ public class AdminMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuit1ActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-
+        int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to Log Out?", "Log Out", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            LoginGUI login = new LoginGUI();
+            this.dispose();
+            login.setVisible(true);
+        }
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnUserRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserRegistrationActionPerformed

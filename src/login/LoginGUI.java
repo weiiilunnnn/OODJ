@@ -12,6 +12,7 @@ import ui.PurchaseManagerMenu;
 import ui.SalesManagerMenu;
 import models.User;
 import javax.swing.JOptionPane;
+import models.Admin;
 
 /**
  *
@@ -19,12 +20,14 @@ import javax.swing.JOptionPane;
  */
 public class LoginGUI extends javax.swing.JFrame {
     private final LoginCODE loginCODE = new LoginCODE();
+    private Admin admin;
 
     /**
      * Creates new form LoginGUI
      */
     public LoginGUI() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -50,6 +53,7 @@ public class LoginGUI extends javax.swing.JFrame {
         txtUserID = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("OSWB");
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -95,7 +99,7 @@ public class LoginGUI extends javax.swing.JFrame {
         Role.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Role.setText("Role");
 
-        boxRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select", "Sales Manager", "Purchase Manager", "Inventory Manager", "Financial Manager", "Admin" }));
+        boxRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select", "Sales Manager", "Purchase Manager", "Inventory Manager", "Finance Manager", "Admin" }));
         boxRole.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 boxRoleActionPerformed(evt);
@@ -214,42 +218,46 @@ public class LoginGUI extends javax.swing.JFrame {
         String enteredPassword = new String(txtPassword.getPassword());
         String selectedRole = (String) boxRole.getSelectedItem();
 
+        // Check if the role is selected
         if (selectedRole.equals("Please Select")) {
             JOptionPane.showMessageDialog(this, "Please select a role", "Login Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        // Set the login details
         loginCODE.setUserID(enteredUserID);
         loginCODE.setPassword(enteredPassword);
         loginCODE.setSelectedRole(selectedRole);
 
+        // Validate the user credentials
         if (loginCODE.isValidUser()) {
             JOptionPane.showMessageDialog(this, "Login Successful", "Successful", JOptionPane.INFORMATION_MESSAGE);
-            User user = loginCODE.loadUserDetails();
+            User user = loginCODE.loadUserDetails();  // Load the User details from the login
 
+            // Depending on the selected role, open the corresponding menu
             switch (selectedRole) {
                 case "Sales Manager" -> {
-                    SalesManagerMenu salesManagerMenu = new SalesManagerMenu();
+                    SalesManagerMenu salesManagerMenu = new SalesManagerMenu(user); // Pass user
                     this.dispose();
                     salesManagerMenu.setVisible(true);
                 }
                 case "Purchase Manager" -> {
-                    PurchaseManagerMenu purchaseManagerMenu = new PurchaseManagerMenu();
+                    PurchaseManagerMenu purchaseManagerMenu = new PurchaseManagerMenu(user); // Pass user
                     this.dispose();
                     purchaseManagerMenu.setVisible(true);
                 }
                 case "Admin" -> {
-                    AdminMenu adminMenu = new AdminMenu();
+                    AdminMenu adminMenu = new AdminMenu(user); // Pass user (Admin is a subclass of User)
                     this.dispose();
                     adminMenu.setVisible(true);
                 }
                 case "Inventory Manager" -> {
-                    InventoryManagerMenu inventoryManagerMenu = new InventoryManagerMenu();
+                    InventoryManagerMenu inventoryManagerMenu = new InventoryManagerMenu(user); // Pass user
                     this.dispose();
                     inventoryManagerMenu.setVisible(true);
                 }
                 case "Finance Manager" -> {
-                    FinanceManagerMenu financeManagerMenu = new FinanceManagerMenu();
+                    FinanceManagerMenu financeManagerMenu = new FinanceManagerMenu(user); // Pass user
                     this.dispose();
                     financeManagerMenu.setVisible(true);
                 }
