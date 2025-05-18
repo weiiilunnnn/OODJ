@@ -1,0 +1,22 @@
+ITM001,Keyboard,10,45.5,5,OK
+ITM002,Mouse,3,20.0,5,Restock
+ITM003,Monitor,7,250.0,4,OK
+ITM004,Printer,10,400.0,5,OK
+ITM005,Laptop Stand,15,55.0,5,OK
+ITM006,USB Hub,12,18.0,5,OK
+ITM007,Projector,1,600.0,2,Restock
+ITM008,Webcam,5,120.0,4,OK
+ITM009,Drawing Tablet,6,320.0,3,OK
+ITM010,Router,0,180.0,2,Restock
+ITM011,Extension Cord,9,25.0,5,OK
+ITM012,Microphone,8,150.0,6,OK
+ITM013,Chair Mat,2,35.0,4,Restock
+ITM014,Ergonomic Chair,4,950.0,5,Restock
+ITM015,LCD Cleaner,10,15.0,3,OK
+ITM016,Headphones,11,280.0,6,OK
+ITM017,Desk Pad,3,10.0,5,Restock
+ITM018,Flash Drive,20,35.0,10,OK
+ITM019,Graphics Card,1,1200.0,2,Restock
+ITM020,Desktop Tower,6,1800.0,5,OK
+ITM021,Iphone,10,2500.0,5,OK
+ITM022,Samsung Phone,3,2300.0,5,Restock

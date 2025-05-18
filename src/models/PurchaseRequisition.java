@@ -8,10 +8,88 @@ package models;
  *
  * @author lunwe
  */
-public class PurchaseRequisition {
-    private String requisitionID;
-    private String itemCode;
+public class PurchaseRequisition implements ItemDependentRecord{
+    private String prID;
+    private String itemID;
+    private String itemName;
     private int quantity;
-    private String requiredByDate;
-    private String salesManagerID;
+    private String raisedBy;
+    private String date;
+    private String status;
+    
+    public PurchaseRequisition() {}
+
+    public PurchaseRequisition(String prID, String itemID, String itemName, int quantity, String raisedBy, String dateNeeded, String status) {
+        this.prID = prID;
+        this.itemID = itemID;
+        this.itemName = itemName;
+        this.quantity = quantity;
+        this.raisedBy = raisedBy;
+        this.date = dateNeeded;
+        this.status = status;
+    }
+
+    public String getPrID() {
+        return prID;
+    }
+
+    public void setPrID(String prID) {
+        this.prID = prID;
+    }
+
+    @Override
+    public String getItemID() {
+        return itemID;
+    }
+
+    public void setItemID(String itemID) {
+        this.itemID = itemID;
+    }
+
+    @Override
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getRaisedBy() {
+        return raisedBy;
+    }
+
+    public void setRaisedBy(String raisedBy) {
+        this.raisedBy = raisedBy;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    @Override
+    public String toFileFormat() {
+        return prID + "," + itemID + "," + itemName + "," + quantity + "," + raisedBy + "," + date + "," + status;
+    }
+
 }

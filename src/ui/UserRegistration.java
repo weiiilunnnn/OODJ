@@ -16,6 +16,7 @@ import models.InventoryManager;
 import models.PurchaseManager;
 import models.SalesManager;
 import models.User;
+import services.IDGenerator;
 /**
  *
  * @author lunwe
@@ -122,31 +123,6 @@ public class UserRegistration extends javax.swing.JFrame {
             return false;
         }
         return true;
-    }
-    
-    private String generateNextUserID(String prefix) {
-        String fileName = "userData.txt"; // Adjust to your actual file path
-        int max = 0;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length > 0 && parts[0].startsWith(prefix)) {
-                    String numberPart = parts[0].substring(prefix.length());
-                    try {
-                        int number = Integer.parseInt(numberPart);
-                        if (number > max) {
-                            max = number;
-                        }
-                    } catch (NumberFormatException ignored) {}
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
-        }
-
-        return prefix + String.format("%03d", max + 1);
     }
     
     /**
@@ -556,16 +532,13 @@ public class UserRegistration extends javax.swing.JFrame {
 
         if (NewUser != null) {
             userList.add(NewUser);
+            updateUserDataFile(); 
             System.out.println("New User Data Added...");
-            
-            Admin admin = new Admin();
-            admin.registerNewUser(NewUser);
         }
-
         // Clear text fields after adding
         setEmpty();
         
-        JOptionPane.showMessageDialog(this, "New Customer Data Added...");
+        JOptionPane.showMessageDialog(this, "New user registered successfully.");
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -593,7 +566,8 @@ public class UserRegistration extends javax.swing.JFrame {
 
         if (!found) {
             JOptionPane.showMessageDialog(this, "User ID not found.");
-            txtUserID.setEnabled(true);  // Allow editing if not found
+            txtUserID.setEnabled(false);  // Allow editing if not found
+            setEmpty();
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -723,7 +697,7 @@ public class UserRegistration extends javax.swing.JFrame {
         }
 
         // Generate and set the next User ID
-        String newUserID = generateNextUserID(prefix);
+        String newUserID = IDGenerator.generateNextID(prefix, "userData.txt");
         txtUserID.setText(newUserID);  // Set the new User ID
         txtUserID.setEditable(false);
     }//GEN-LAST:event_boxRoleActionPerformed

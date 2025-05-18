@@ -6,6 +6,7 @@ package ui;
 
 import javax.swing.JOptionPane;
 import login.LoginGUI;
+import models.PurchaseManager;
 import models.User;
 
 /**
@@ -56,6 +57,11 @@ public class PurchaseManagerMenu extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("VIEW ITEMS");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setText("VIEW SUPPLIERS");
@@ -245,6 +251,11 @@ public class PurchaseManagerMenu extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_btnQuit1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+        new ItemEntry((PurchaseManager) user).setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

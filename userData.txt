@@ -1,7 +1,10 @@
-AM001,Joshua,123,Admin,john111@example.com,0123456789
-PM001,Julie,123,Purchase Manager,julie@gmail.com,012-1211444
-SM001,Wei,1234,Sales Manager,wei@mail.com,019-7871444
-SM002,Chantalle,123,Sales Manager,chantalle@mail.com,019-7784444
-FM001,Wendy,123,Finance Manager,wennddy@gmail.com,019-7784444
-SM003,Messi,123,Sales Manager,messi@mail.com,018-7747777
-IM001,Tasha,123,Inventory Manager,tasha@mail.com,017-7747774
+AM001,Joshua,123,Admin,014-7745555,joshua@mail.com
+PM001,Julie,123,Purchase Manager,012-1211444,julie@gmail.com
+SM001,Wei,1234,Sales Manager,019-7871444,wei@mail.com
+SM002,Chantalle,123,Sales Manager,019-7784444,chantalle@mail.com
+FM001,Wendy,123,Finance Manager,019-7784444,wennddy@gmail.com
+SM003,Messi,123,Sales Manager,018-7747777,messi@mail.com
+IM001,Tasha,123,Inventory Manager,017-7747774,tasha@mail.com
+AM002,Solana,123,Admin,019-9987777,sna@gmail.com
+AM003,Joe,123,Admin,018-7775555,joejoe@mail.com
+PM002,Timothy,123,Purchase Manager,018-7747774,123@mail.com
