@@ -4,17 +4,21 @@
  */
 package ui;
 
+import models.User;
+
 /**
  *
  * @author lunwe
  */
 public class ViewPO extends javax.swing.JFrame {
-
+     private User user;
     /**
      * Creates new form ViewPO
      */
-    public ViewPO() {
+    public ViewPO(User user) {
+        this.user = user;
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -276,11 +280,12 @@ public class ViewPO extends javax.swing.JFrame {
                         .addComponent(txtPOID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnUpdateItem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnClearForm, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnUpdateItem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnClearForm, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(29, 29, 29))
         );
 
@@ -303,91 +308,20 @@ public class ViewPO extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreateNewActionPerformed
 
     private void btnDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteItemActionPerformed
-        int selectedRow = tablePR.getSelectedRow();
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Please select a PR item to delete.");
-            return;
-        }
 
-        String prID = tablePR.getValueAt(selectedRow, 0).toString(); // PR ID column
-        String itemName = tablePR.getValueAt(selectedRow, 2).toString(); // Item Name column
-
-        int confirm = JOptionPane.showConfirmDialog(this,
-            "Are you sure you want to delete PR \"" + itemName + "\" (PR ID: " + prID + ")?",
-            "Confirm Deletion", JOptionPane.YES_NO_OPTION);
-
-        if (confirm == JOptionPane.YES_OPTION) {
-            manager.delete(prID, PRList);  // Make sure PRList is your current list
-
-            DefaultTableModel model = manager.getPRTableModel();
-            tablePR.setModel(model);
-
-            TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-            tablePR.setRowSorter(sorter);
-
-            // Reapply comparator(s) as needed, e.g. for integer columns
-            sorter.setComparator(3, (o1, o2) -> Integer.compare(Integer.parseInt(o1.toString()), Integer.parseInt(o2.toString())));
-
-            JOptionPane.showMessageDialog(this, "PR deleted successfully.");
-
-            clearPRForm();
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Deletion cancelled.");
-        }
     }//GEN-LAST:event_btnDeleteItemActionPerformed
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         this.dispose();
-        new SalesManagerMenu(user).setVisible(true);
+        new PurchaseManagerMenu(user).setVisible(true);
     }//GEN-LAST:event_btnBack1ActionPerformed
 
     private void btnClearFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearFormActionPerformed
-        clearPRForm();
+
     }//GEN-LAST:event_btnClearFormActionPerformed
 
     private void btnUpdateItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateItemActionPerformed
-        int selectedRow = tablePR.getSelectedRow();
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Please select an item to update.");
-            return;
-        }
 
-        if (!validateInputs()) return;
-
-        int confirm = JOptionPane.showConfirmDialog(this,
-            "Are you sure you want to update this restock info?",
-            "Confirm Update", JOptionPane.YES_NO_OPTION);
-
-        if (confirm == JOptionPane.YES_OPTION) {
-            String prID = txtPRID.getText().trim();
-            String itemID = txtItemID.getText().trim();
-            String itemName = txtItemName.getText().trim();
-            int restockQty = Integer.parseInt(txtRestockQty.getText().trim());
-            String raisedBy = tablePR.getValueAt(selectedRow, 4).toString();
-            Date requiredDate = txtRequiredDate.getDate();
-            String status = txtPRStatus.getText().trim();
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String requiredDateStr = sdf.format(requiredDate);
-
-            // Create updated PR object
-            PurchaseRequisition updatedPR = new PurchaseRequisition(
-                prID, itemID, itemName, restockQty, raisedBy, requiredDateStr, status
-            );
-
-            // Load all PRs, update the matching one, then save
-            List<PurchaseRequisition> prList = manager.load();
-            manager.update(updatedPR, prList);  // <- this saves the file!
-
-            // Refresh table
-            tablePR.setModel(manager.getPRTableModel());
-
-            JOptionPane.showMessageDialog(this, "Restock info updated successfully.");
-            btnClearForm.doClick();
-        } else {
-            JOptionPane.showMessageDialog(this, "Update cancelled.");
-        }
     }//GEN-LAST:event_btnUpdateItemActionPerformed
 
     /**
@@ -420,7 +354,7 @@ public class ViewPO extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewPO().setVisible(true);
+                //new ViewPO().setVisible(true);
             }
         });
     }

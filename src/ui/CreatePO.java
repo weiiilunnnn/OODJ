@@ -4,17 +4,21 @@
  */
 package ui;
 
+import models.User;
+
 /**
  *
  * @author lunwe
  */
 public class CreatePO extends javax.swing.JFrame {
-
+    private User user;
     /**
      * Creates new form CreatePO
      */
-    public CreatePO() {
+    public CreatePO(User user) {
+        this.user = user;
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -72,7 +76,7 @@ public class CreatePO extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CreatePO().setVisible(true);
+                //new CreatePO().setVisible(true);
             }
         });
     }
