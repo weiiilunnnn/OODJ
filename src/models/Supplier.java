@@ -4,8 +4,6 @@
  */
 package models;
 
-import java.util.List;
-
 /**
  *
  * @author lunwe
@@ -13,17 +11,18 @@ import java.util.List;
 public class Supplier{
     private String supplierID;
     private String supplierName;
-    private List<String> itemCodes;
     private String ContactNo;
     private String supplierAddress; 
+    private double distance;
 
     public Supplier() {}
 
-    public Supplier(String supplierID, String supplierName, String ContactNo, String supplierAddress){
+    public Supplier(String supplierID, String supplierName, String ContactNo, String supplierAddress, double distance){
         this.supplierID = supplierID;
         this.supplierName = supplierName;
         this.ContactNo = ContactNo;
         this.supplierAddress = supplierAddress;
+        this.distance = distance;
     }
 
     public String getSupplierID() {
@@ -57,50 +56,18 @@ public class Supplier{
     public void setSupplierAddress(String supplierAdress) {
         this.supplierAddress = supplierAdress;
     }
-
+    
+    public double getDistance(){
+        return distance;
+    }
+    
+    public void setDistance(double distance){
+        this.distance = distance;
+    }
+    
     @Override
     public String toString() {
-        return supplierID + "," +  supplierName + "," + ContactNo + "," + supplierAddress;
-    }
-
-    public String toDataString() {
-        // Join item codes with semicolon (or any delimiter you prefer)
-        String items = (itemCodes == null || itemCodes.isEmpty()) ? "" : String.join(";", itemCodes);
-
-        return supplierID + "," + supplierName + "," + items;
-    }  
-    
-    // Implementing the interface methods
-    public String getItemID() {
-        // Assuming you want to remove based on the first item (if multiple exist)
-        return null;
-    }
-
-    public String getItemName() {
-        return supplierName; // Or you can return something else more item-related
-    }
-
-    public String toFileFormat() {
-        String items = itemCodes == null ? "" : String.join(",", itemCodes);
-        return supplierID + "," + supplierName + (items.isEmpty() ? "" : "," + items);
-    }
-
-    public boolean removeItemIfExists(String itemID) {
-        return itemCodes != null && itemCodes.remove(itemID);
-    }
-    
-    public List<String> getItemCodes() {
-        return itemCodes;
-    }
-
-    public void setItemCodes(List<String> itemCodes) {
-        this.itemCodes = itemCodes;
-    }
-
-    public void removeItemCode(String itemId) {
-        if (itemCodes != null) {
-            itemCodes.remove(itemId);
-        }
-    }
+        return supplierID + "," +  supplierName + "," + ContactNo + "," + supplierAddress + "," + distance;
+    } 
     
 }

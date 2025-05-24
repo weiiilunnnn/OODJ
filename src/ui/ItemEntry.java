@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import models.Item;
+import services.FileOperation;
 import services.IDGenerator;
 import services.ItemManager;
 import services.PRManager;
@@ -236,7 +237,7 @@ public class ItemEntry extends javax.swing.JFrame {
         );
 
         ItemPriceLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        ItemPriceLabel.setText("Item Price:");
+        ItemPriceLabel.setText("Sales Price:");
 
         tblItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -516,10 +517,10 @@ public class ItemEntry extends javax.swing.JFrame {
 
         if (confirm == JOptionPane.YES_OPTION) {
             manager.delete(itemId, itemList); // Assumes itemList is the list used to populate the table
-            PRManager prManager = new PRManager();
-            manager.deleteItemReferencesFromFile(itemId, prManager);
-            SupplierManager supplierManager = new SupplierManager();
-            supplierManager.deleteItemFromAllSuppliers(itemId, "SupplierList.txt");
+            FileOperation fo = new FileOperation();
+            fo.deleteItemFromAllFile(itemId, "PurchaseRequisition.txt");
+            fo.deleteItemFromAllFile(itemId, "PurchaseOrder.txt");
+            fo.deleteItemFromAllFile(itemId, "SupplierList.txt");
 
             // Refresh the table model
             DefaultTableModel model = manager.getItemTableModel();

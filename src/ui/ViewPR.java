@@ -4,17 +4,18 @@
  */
 package ui;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import models.PurchaseRequisition;
 import models.SalesManager;
 import models.User;
+import services.FileOperation;
 import services.PRManager;
 
 /**
@@ -28,6 +29,8 @@ public class ViewPR extends javax.swing.JFrame {
     private List<PurchaseRequisition> PRList = new ArrayList<>();
     private DefaultTableModel tableModel;
     private TableRowSorter<DefaultTableModel> sorter;
+    private Map<String, String> itemMap;
+    
     /**
      * Creates new form ViewPR
      */
@@ -38,46 +41,39 @@ public class ViewPR extends javax.swing.JFrame {
         PRList = manager.load();
         tableModel = manager.getPRTableModel();
         tablePR.setModel(tableModel);
+        itemMap = FileOperation.getItemMap();
         
-        sorter = new TableRowSorter<>(tableModel);
-        tablePR.setRowSorter(sorter);
-        sorter.setComparator(3, (o1, o2) -> Double.compare(Double.parseDouble(o1.toString()), Double.parseDouble(o2.toString())));
-        sorter.setComparator(5, (o1, o2) -> {
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date d1 = sdf.parse(o1.toString());
-                Date d2 = sdf.parse(o2.toString());
-                return d1.compareTo(d2);
-            } catch (ParseException e) {
-                return 0;
-            }
-        });
-
-        /** Row selection auto fill the form fields for editing */
         tablePR.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                int row = tablePR.getSelectedRow();
-                if (row >= 0 && tablePR.getRowCount() > 0 && tablePR.getColumnCount() >= 5) {
+        if (!e.getValueIsAdjusting()) {
+            int row = tablePR.getSelectedRow();
+            if (row >= 0 && tablePR.getRowCount() > 0 && tablePR.getColumnCount() >= 5) {
+                try {
+                    txtPRID.setText(tablePR.getValueAt(row, 0).toString());
+
+                    String itemId = tablePR.getValueAt(row, 1).toString();
+                    txtItemID.setText(itemId);
+
+                    String itemName = itemMap.getOrDefault(itemId, "Unknown Item");
+                    txtItemName.setText(itemName);
+
+                    txtRestockQty.setText(tablePR.getValueAt(row, 3).toString());
+
+                    String dateStr = tablePR.getValueAt(row, 5).toString(); // "Required Date"
                     try {
-                        txtPRID.setText(tablePR.getValueAt(row, 0).toString());
-                        txtItemID.setText(tablePR.getValueAt(row, 1).toString());
-                        txtItemName.setText(tablePR.getValueAt(row, 2).toString());
-                        txtRestockQty.setText(tablePR.getValueAt(row, 3).toString());
-                        String dateStr = tablePR.getValueAt(row, 5).toString(); // column 5 is "Required Date"
-                        try {
-                            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                            Date date = formatter.parse(dateStr);
-                            txtRequiredDate.setDate(date);
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(this, "Failed to parse date: " + ex.getMessage());
-                        }
-                        txtPRStatus.setText(tablePR.getValueAt(row, 6).toString());
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                        Date date = formatter.parse(dateStr);
+                        txtRequiredDate.setDate(date);
                     } catch (Exception ex) {
-                        System.err.println("Error reading selected row: " + ex.getMessage());
+                        JOptionPane.showMessageDialog(this, "Failed to parse date: " + ex.getMessage());
                     }
+
+                    txtPRStatus.setText(tablePR.getValueAt(row, 6).toString());
+                } catch (Exception ex) {
+                    System.err.println("Error reading selected row: " + ex.getMessage());
                 }
             }
-        });
+        }
+    });
 
         /** Real-time search: filter table as user types */
         txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -447,7 +443,7 @@ public class ViewPR extends javax.swing.JFrame {
 
             // Create updated PR object
             PurchaseRequisition updatedPR = new PurchaseRequisition(
-                prID, itemID, itemName, restockQty, raisedBy, requiredDateStr, status
+                prID, itemID, restockQty, raisedBy, requiredDateStr, status
             );
 
             // Load all PRs, update the matching one, then save
@@ -479,22 +475,25 @@ public class ViewPR extends javax.swing.JFrame {
             "Confirm Deletion", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            manager.delete(prID, PRList);  // Make sure PRList is your current list
+            boolean success = FileOperation.deleteWithDependencies(prID, true); // true = PR deletion
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Purchase Requisition and related POs deleted.");
 
-            DefaultTableModel model = manager.getPRTableModel();
-            tablePR.setModel(model);
+                // Refresh table after deletion
+                DefaultTableModel model = manager.getPRTableModel(); // Make sure manager is initialized
+                tablePR.setModel(model);
 
-            TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-            tablePR.setRowSorter(sorter);
+                TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+                tablePR.setRowSorter(sorter);
 
-            // Reapply comparator(s) as needed, e.g. for integer columns
-            sorter.setComparator(3, (o1, o2) -> Integer.compare(Integer.parseInt(o1.toString()), Integer.parseInt(o2.toString())));
+                // Optional: set column comparator if necessary
+                sorter.setComparator(3, (o1, o2) -> Integer.compare(Integer.parseInt(o1.toString()), Integer.parseInt(o2.toString())));
 
-            JOptionPane.showMessageDialog(this, "PR deleted successfully.");
+                clearPRForm(); // Clear input fields if any
 
-            clearPRForm();
-
-
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to delete the PR.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Deletion cancelled.");
         }

@@ -11,7 +11,6 @@ package models;
 public class PurchaseRequisition implements ItemDependentRecord{
     private String prID;
     private String itemID;
-    private String itemName;
     private int quantity;
     private String raisedBy;
     private String date;
@@ -19,10 +18,9 @@ public class PurchaseRequisition implements ItemDependentRecord{
     
     public PurchaseRequisition() {}
 
-    public PurchaseRequisition(String prID, String itemID, String itemName, int quantity, String raisedBy, String dateNeeded, String status) {
+    public PurchaseRequisition(String prID, String itemID, int quantity, String raisedBy, String dateNeeded, String status) {
         this.prID = prID;
         this.itemID = itemID;
-        this.itemName = itemName;
         this.quantity = quantity;
         this.raisedBy = raisedBy;
         this.date = dateNeeded;
@@ -44,15 +42,6 @@ public class PurchaseRequisition implements ItemDependentRecord{
 
     public void setItemID(String itemID) {
         this.itemID = itemID;
-    }
-
-    @Override
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
     }
 
     public int getQuantity() {
@@ -89,7 +78,7 @@ public class PurchaseRequisition implements ItemDependentRecord{
     
     @Override
     public String toFileFormat() {
-        return prID + "," + itemID + "," + itemName + "," + quantity + "," + raisedBy + "," + date + "," + status;
+        return prID + "," + itemID + "," + quantity + "," + raisedBy + "," + date + "," + status;
     }
 
 }

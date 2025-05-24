@@ -1,6 +1,5 @@
 package services;
 
-
 import java.util.*;
 import javax.swing.table.DefaultTableModel;
 import models.Item;
@@ -51,7 +50,7 @@ public class ItemManager extends MainManager<Item>{
     
     public DefaultTableModel getItemTableModel() {
         List<Item> itemList = load();
-        String[] columns = {"Item ID", "Name", "Qty", "Price", "ROL", "Flag"};
+        String[] columns = {"Item ID", "Name", "Qty", "Sales Price", "ROL", "Flag"};
 
         return MainManager.getTableModel(itemList, columns, item -> new Object[]{
             item.getItemID(), item.getItemName(), item.getItemQty(),

@@ -7,7 +7,6 @@ package services;
 import java.io.*;
 import java.util.*;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import models.Supplier;
 /**
@@ -15,8 +14,9 @@ import models.Supplier;
  * @author lunwe
  */
 
-public class SupplierManager extends MainManager<Supplier>{
-    private List<String> tempItemCodes = new ArrayList<>();
+public class SupplierManager extends MainManager<Supplier>{   
+    private static final String SUPPLIER_LIST_FILE = "SupplierList.txt";
+    FileOperation fo = new FileOperation();
     
     public SupplierManager() {
         super("Supplier.txt");
@@ -25,8 +25,8 @@ public class SupplierManager extends MainManager<Supplier>{
     @Override
     protected Supplier parseLine(String line) {
         String[] parts = line.split(",");
-        if (parts.length == 4) {
-            return new Supplier(parts[0], parts[1], parts[2], parts[3]);
+        if (parts.length == 5) {
+            return new Supplier(parts[0], parts[1], parts[2], parts[3], Double.parseDouble(parts[4]));
         }
         return null;
     }
@@ -55,10 +55,10 @@ public class SupplierManager extends MainManager<Supplier>{
     
     public DefaultTableModel getSupplierTableModel() {
         List<Supplier> supplierList = load();
-        String[] columns = {"Supplier ID", "Supplier Name", "Contact Number", "Address"};
+        String[] columns = {"Supplier ID", "Supplier Name", "Contact Number", "Address", "Distance (km)"};
 
         return MainManager.getTableModel(supplierList, columns, supplier -> new Object[]{
-            supplier.getSupplierID(), supplier.getSupplierName(), supplier.getContactNo(), supplier.getSupplierAddress(),
+            supplier.getSupplierID(), supplier.getSupplierName(), supplier.getContactNo(), supplier.getSupplierAddress(), supplier.getDistance()
         });
     }
 
@@ -79,7 +79,6 @@ public class SupplierManager extends MainManager<Supplier>{
         return items;
     }
     
-    
     public DefaultTableModel getItemTableModel(List<String[]> itemlist) {
         String[] columns = {"Item ID", "Item Name"};
         DefaultTableModel model = new DefaultTableModel(columns, 0);
@@ -92,208 +91,115 @@ public class SupplierManager extends MainManager<Supplier>{
     }
     
     
-    public void addItemCode(String itemCode) {
-        if (itemCode != null && !itemCode.isEmpty()) {
-            tempItemCodes.add(itemCode);
+    // Method to get a list of item IDs supplied by a given supplier ID
+    public List<String> getItemIDsBySupplier(String supplierID) {
+        List<String> itemIDs = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(SUPPLIER_LIST_FILE))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts[0].equals(supplierID)) {
+                    itemIDs.add(parts[1]);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return itemIDs;
     }
 
-    public void saveSupplier(String supplierID, String supplierName) {
-        try {
-            updateSupplierInFile(supplierID, supplierName, tempItemCodes);
-            tempItemCodes = new ArrayList<>();
+    // Method to get items (ID and Name) supplied by a given supplier ID
+    public Map<String, String> getSupplierItems(String supplierID) {
+        List<String> itemIDs = getItemIDsBySupplier(supplierID);
+        Map<String, String> itemMap = fo.getItemMap();
+
+        Map<String, String> supplierItems = new HashMap<>();
+        for (String itemID : itemIDs) {
+            if (itemMap.containsKey(itemID)) {
+                supplierItems.put(itemID, itemMap.get(itemID));
+            }
+        }
+        return supplierItems;
+    }
+    
+    public List<String[]> getSupplierItemDetails(String supplierID) {
+        List<String[]> itemDetails = new ArrayList<>();
+
+        Map<String, String> itemMap = fo.getItemMap();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(SUPPLIER_LIST_FILE))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 3 && parts[0].equals(supplierID)) {
+                    String itemID = parts[1];
+                    String price = parts[2];
+                    String itemName = itemMap.getOrDefault(itemID, "Unknown Item");
+                    itemDetails.add(new String[]{itemID, itemName, price});
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return itemDetails;
+    }
+    
+    public void displaySupplierItems(String supplierID, JTable table) throws IOException {
+        List<String[]> supplierItems = getSupplierItemDetails(supplierID);
+        String[] columns = {"Item ID", "Item Name", "Supplied Price"};
+
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+        for (String[] item : supplierItems) {
+            model.addRow(item);
+        }
+
+        table.setModel(model);
+    }
+    
+    public void addItemCode(String supplierID, String itemID, String price) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("SupplierList.txt", true))) {
+            writer.write(supplierID + "," + itemID + "," + price);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void saveSupplier(String supplierID, String supplierName, double distance) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Supplier.txt", true))) {
+            writer.write(supplierID + "," + supplierName + ",NA,NA," + distance);
+            writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void updateSupplierInFile(String supplierID, String supplierName, List<String> newItemCodes) throws IOException {
-        File file = new File("SupplierList.txt");
-        List<String> lines = new ArrayList<>();
+    public void deleteSupplierItem(String supplierID, String itemID) throws IOException {
+        List<String> updatedLines = new ArrayList<>();
 
-        boolean supplierFound = false;
+        try (BufferedReader reader = new BufferedReader(new FileReader(SUPPLIER_LIST_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 1) {
+                    String currentSupplierID = parts[0].trim();
+                    String currentItemID = parts[1].trim();
 
-        // Read and process existing lines
-        if (file.exists()) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String[] parts = line.split(",");
-                    if (parts[0].equals(supplierID)) {
-                        supplierFound = true;
-
-                        // Merge existing + new item codes (avoid duplicates)
-                        Set<String> itemSet = new LinkedHashSet<>();
-                        itemSet.addAll(Arrays.asList(parts).subList(2, parts.length)); // existing
-                        itemSet.addAll(newItemCodes); // new ones
-
-                        StringBuilder updatedLine = new StringBuilder();
-                        updatedLine.append(supplierID).append(",").append(supplierName);
-                        for (String item : itemSet) {
-                            updatedLine.append(",").append(item);
-                        }
-                        lines.add(updatedLine.toString());
-                    } else {
-                        lines.add(line); 
+                    // Keep only lines that are not the one to delete
+                    if (!(currentSupplierID.equals(supplierID) && currentItemID.equals(itemID))) {
+                        updatedLines.add(line);
                     }
                 }
             }
         }
 
-        if (!supplierFound) {
-            StringBuilder newLine = new StringBuilder();
-            newLine.append(supplierID).append(",").append(supplierName);
-            for (String item : newItemCodes) {
-                newLine.append(",").append(item);
-            }
-            lines.add(newLine.toString());
-        }
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            for (String updatedLine : lines) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(SUPPLIER_LIST_FILE))) {
+            for (String updatedLine : updatedLines) {
                 writer.write(updatedLine);
                 writer.newLine();
             }
         }
     }
 
-
-    public Map<String, String> loadItemMap() throws IOException {
-        Map<String, String> map = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("Item.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 2) {
-                    map.put(parts[0].trim(), parts[1].trim());
-                }
-            }
-        }
-        return map;
-    }
-    
-    public void displaySupplierItems(String supplierID, JTable savedItemTable) throws IOException {
-        Map<String, String> itemMap = loadItemMap();
-
-        try (BufferedReader br = new BufferedReader(new FileReader("SupplierList.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 3 && parts[0].equals(supplierID)) {
-                    // Collect item codes from parts[2] onwards (handle variable-length lines)
-                    List<String> itemCodes = new ArrayList<>();
-                    for (int i = 2; i < parts.length; i++) {
-                        itemCodes.add(parts[i].trim());
-                    }
-
-                    // Load into table
-                    DefaultTableModel model = (DefaultTableModel) savedItemTable.getModel();
-                    model.setRowCount(0);
-                    for (String code : itemCodes) {
-                        String name = itemMap.getOrDefault(code, "Unknown");
-                        model.addRow(new Object[]{code, name});
-                    }
-                    return; // Stop after first match
-                }
-            }
-        }
-    }
-    
-    public void deleteSupplierItem(String supplierID, String itemCode) throws IOException {
-        File inputFile = new File("SupplierList.txt");
-        File tempFile = new File("SupplierList_temp.txt");
-
-        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
-
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split(",");
-            if (parts.length >= 3 && parts[0].equals(supplierID)) {
-                
-                List<String> items = new ArrayList<>(Arrays.asList(parts).subList(2, parts.length));
-          
-                items.removeIf(code -> code.equalsIgnoreCase(itemCode));
-                
-                String newLine = parts[0] + "," + parts[1]; 
-                for (String item : items) {
-                    newLine += "," + item;
-                }
-
-                writer.write(newLine);
-            } else {               
-                writer.write(line);
-            }
-            writer.newLine();
-        }
-
-        reader.close();
-        writer.close();
-
-        if (!inputFile.delete()) {
-            System.out.println("Could not delete original file");
-        }
-        if (!tempFile.renameTo(inputFile)) {
-            System.out.println("Could not rename temp file");
-        }
-    }
-    
-    public void selectTable(JTable table, JTextField idField, JTextField nameField) {
-        table.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                int row = table.getSelectedRow();
-                if (row >= 0 && table.getRowCount() > 0 && table.getColumnCount() >= 2) {
-                    try {
-                        Object idObj = table.getValueAt(row, 0);
-                        Object nameObj = table.getValueAt(row, 1);
-
-                        if (idObj != null && nameObj != null) {
-                            idField.setText(idObj.toString());
-                            nameField.setText(nameObj.toString());
-                        }
-                    } catch (Exception ex) {
-                        System.err.println("Error reading selected row: " + ex.getMessage());
-                    }
-                }
-            }
-        });
-    }
-    
-    public void deleteItemFromAllSuppliers(String itemID, String filePath) {
-        List<Supplier> updatedSuppliers = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length < 2) continue;
-
-                String supplierID = parts[0];
-                String supplierName = parts[1];
-                List<String> itemCodes = new ArrayList<>();
-
-                for (int i = 2; i < parts.length; i++) {
-                    if (!parts[i].equals(itemID)) {
-                        itemCodes.add(parts[i]);
-                    }
-                }
-
-                Supplier supplier = new Supplier(supplierID, supplierName, "", "");
-                supplier.setItemCodes(itemCodes);
-                updatedSuppliers.add(supplier);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Write back to file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            for (Supplier s : updatedSuppliers) {
-                writer.write(s.toFileFormat());
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

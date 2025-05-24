@@ -6,6 +6,5 @@ package models;
 
 public interface ItemDependentRecord {
     String getItemID();
-    String getItemName();
     String toFileFormat();
 }

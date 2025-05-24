@@ -12,23 +12,25 @@ public class PurchaseOrder implements ItemDependentRecord{
     private String poID;
     private String prID;
     private String itemID;
-    private String itemName;
     private int quantity;
     private String raisedBy;
     private String date;
     private String status;
+    private String SupplierID;
+    private String SupplierPrice;
     
     public PurchaseOrder() {}
 
-    public PurchaseOrder(String poID, String prID, String itemID, String itemName, int quantity, String raisedBy, String date, String status) {
+    public PurchaseOrder(String poID, String prID, String itemID, int quantity, String raisedBy, String date, String status, String SupplierID, String SupplierPrice) {
         this.poID = poID;
         this.prID = prID;
         this.itemID = itemID;
-        this.itemName = itemName;
         this.quantity = quantity;
         this.raisedBy = raisedBy;
         this.date = date;
         this.status = status;
+        this.SupplierID = SupplierID;
+        this.SupplierPrice = SupplierPrice;
     }
 
     public String getPoID() {
@@ -54,15 +56,6 @@ public class PurchaseOrder implements ItemDependentRecord{
 
     public void setItemID(String itemID) {
         this.itemID = itemID;
-    }
-
-    @Override
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
     }
 
     public int getQuantity() {
@@ -97,9 +90,26 @@ public class PurchaseOrder implements ItemDependentRecord{
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getSupplierID() {
+        return SupplierID;
+    }
+
+    public void setSupplierID(String SupplierID) {
+        this.SupplierID = SupplierID;
+    }
+
+    public String getSupplierPrice() {
+        return SupplierPrice;
+    }
+
+    public void setSupplierPrice(String SupplierPrice) {
+        this.SupplierPrice = SupplierPrice;
+    }
+    
     
     @Override
     public String toFileFormat() {
-        return poID + "," + prID + "," + itemID +"," + itemName + "," + quantity + "," + raisedBy + "," + date + ","  + status;
+        return poID + "," + prID + "," + itemID +"," + quantity + "," + raisedBy + "," + date + ","  + status + "," + SupplierID + "," + SupplierPrice ;
     }
 }

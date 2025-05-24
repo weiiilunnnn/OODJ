@@ -4,7 +4,11 @@
  */
 package services;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import models.PurchaseRequisition;
 
@@ -13,6 +17,7 @@ import models.PurchaseRequisition;
  * @author lunwe
  */
 public class PRManager extends MainManager<PurchaseRequisition>{
+    
     public PRManager() {
         super("PurchaseRequisition.txt");
     }
@@ -20,9 +25,9 @@ public class PRManager extends MainManager<PurchaseRequisition>{
     @Override
     protected PurchaseRequisition parseLine(String line) {
         String[] parts = line.split(",");
-        if (parts.length == 7) {
-            return new PurchaseRequisition(parts[0], parts[1], parts[2],
-                Integer.parseInt(parts[3]), parts[4], parts[5], parts[6]);
+        if (parts.length == 6) {
+            return new PurchaseRequisition(parts[0], parts[1],
+                Integer.parseInt(parts[2]), parts[3], parts[4], parts[5]);
         }
         return null;
     }
@@ -51,12 +56,33 @@ public class PRManager extends MainManager<PurchaseRequisition>{
     
     public DefaultTableModel getPRTableModel() {
         List<PurchaseRequisition> prList = load();
+        Map<String, String> itemMap = FileOperation.getItemMap(); // get item name mapping
+
         String[] columns = {"PR ID", "Item ID", "Item Name", "Restock Qty", "PR Raised By", "Required Date", "Status"};
 
-        return MainManager.getTableModel(prList, columns, pr -> new Object[]{
-            pr.getPrID(), pr.getItemID(), pr.getItemName(), pr.getQuantity(),
-            pr.getRaisedBy(), pr.getDate(), pr.getStatus()
+        return MainManager.getTableModel(prList, columns, pr -> {
+            String itemName = itemMap.getOrDefault(pr.getItemID(), "Unknown Item");
+            return new Object[]{
+                pr.getPrID(),            // PR ID
+                pr.getItemID(),          // Item ID
+                itemName,                // Item Name
+                pr.getQuantity(),        // Restock Qty
+                pr.getRaisedBy(),        // PR Raised By
+                pr.getDate(),            // Required Date
+                pr.getStatus()           // Status
+            };
         });
     }
     
+    public boolean saveAll(List<PurchaseRequisition> prList) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("PurchaseRequisition.txt"))) {
+            for (PurchaseRequisition pr : prList) {
+                writer.println(pr.toFileFormat());
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

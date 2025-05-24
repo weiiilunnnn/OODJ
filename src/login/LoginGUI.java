@@ -13,6 +13,7 @@ import ui.SalesManagerMenu;
 import models.User;
 import javax.swing.JOptionPane;
 import models.Admin;
+import services.FileOperation;
 
 /**
  *
@@ -27,6 +28,7 @@ public class LoginGUI extends javax.swing.JFrame {
      */
     public LoginGUI() {
         initComponents();
+        FileOperation.initAllFiles();
         setLocationRelativeTo(null);
     }
 
@@ -266,7 +268,7 @@ public class LoginGUI extends javax.swing.JFrame {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Incorrect IC number or password", "Login Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Incorrect User ID or password", "Login Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 

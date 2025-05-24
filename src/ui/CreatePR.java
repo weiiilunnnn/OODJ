@@ -680,7 +680,7 @@ public class CreatePR extends javax.swing.JFrame {
         String status = "Pending";
 
         // Create PR object
-        PurchaseRequisition pr = new PurchaseRequisition(prID, selectedItemID, selectedItemName, quantity, raisedBy, dateNeeded, status);
+        PurchaseRequisition pr = new PurchaseRequisition(prID, selectedItemID, quantity, raisedBy, dateNeeded, status);
 
         // Save to file
         FileOperation.WriteFile(pr);

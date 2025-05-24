@@ -19,19 +19,21 @@ public class SupplierItems extends javax.swing.JFrame {
 
     private String SupplierID;
     private String SupplierName;
+    private double distance;
     private SupplierManager sm = new SupplierManager();
     private DefaultTableModel tableModel;
     private TableRowSorter<DefaultTableModel> sorter;
+
     
-    /**
-     * Creates new form SupplierItem
-     */
-    public SupplierItems(String SupplierID, String SupplierName) {
+    public SupplierItems(String SupplierID, String SupplierName, double distance) {
         this.SupplierID = SupplierID;
         this.SupplierName = SupplierName;
+        this.distance = distance;
         initComponents();                      
         setLocationRelativeTo(null);         
-
+        txtItemID.setEnabled(false);
+        txtItemName.setEnabled(false);
+        txtPrice.setEnabled(false);
         DefaultTableModel itemTableModel = (DefaultTableModel) savedItemTable.getModel();
         sorter = new TableRowSorter<>(itemTableModel);
         savedItemTable.setRowSorter(sorter);
@@ -39,11 +41,13 @@ public class SupplierItems extends javax.swing.JFrame {
 
         try {
             sm.displaySupplierItems(SupplierID, savedItemTable);
+            tableModel = (DefaultTableModel) savedItemTable.getModel();
+            sorter = new TableRowSorter<>(tableModel);
+            savedItemTable.setRowSorter(sorter);
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Failed to load supplier items.");
         }
-        sm.selectTable(savedItemTable, txtItemID2, txtItemName); 
 
                 
         txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -52,19 +56,38 @@ public class SupplierItems extends javax.swing.JFrame {
                 filterSuppliers(keyword);
             }
         });
-
+        
+        savedItemTable.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int row = savedItemTable.getSelectedRow();
+                if (row >= 0) {
+                    txtItemID.setText(savedItemTable.getValueAt(row, 0).toString());
+                    txtItemName.setText(savedItemTable.getValueAt(row, 1).toString());
+                    txtPrice.setText(savedItemTable.getValueAt(row, 2).toString());
+                }
+            }
+        });
     }
     
     private void filterSuppliers(String keyword) {
         if (keyword == null || keyword.trim().isEmpty()) {
             sorter.setRowFilter(null); 
         } else {
-            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword, 0,1));
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword, 0, 1)); // Search in Item ID and Item Name
         }
     }
-        
+    
+    public void refreshSupplierItemsTable() {
+        try {
+            sm.displaySupplierItems(SupplierID, savedItemTable);
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Failed to load supplier items.");
+        }
+    }
+    
     private boolean validateInputs(){
-        if (txtItemID2.getText().trim().isEmpty() || txtItemName.getText().trim().isEmpty()) {
+        if (txtItemID.getText().trim().isEmpty() || txtItemName.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Insufficient Credentials. Item Deletion Declined.");
             return false;
         }
@@ -73,7 +96,7 @@ public class SupplierItems extends javax.swing.JFrame {
     }
     
     public void clearFields(){
-        txtItemID2.setText(""); txtItemName.setText("");
+        txtItemID.setText(""); txtItemName.setText(""); txtPrice.setText("");
     }
 
     /**
@@ -92,7 +115,7 @@ public class SupplierItems extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        txtItemID2 = new javax.swing.JTextField();
+        txtItemID = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         txtItemName = new javax.swing.JTextField();
         btnDelete2 = new javax.swing.JButton();
@@ -105,6 +128,8 @@ public class SupplierItems extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         btnBack1 = new javax.swing.JButton();
+        jLabel21 = new javax.swing.JLabel();
+        txtPrice = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,9 +180,9 @@ public class SupplierItems extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel18.setText("Item ID:");
 
-        txtItemID2.addActionListener(new java.awt.event.ActionListener() {
+        txtItemID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtItemID2ActionPerformed(evt);
+                txtItemIDActionPerformed(evt);
             }
         });
 
@@ -181,13 +206,13 @@ public class SupplierItems extends javax.swing.JFrame {
 
         savedItemTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Item ID", "Item Name"
+                "Item ID", "Item Name", "Price"
             }
         ));
         jScrollPane2.setViewportView(savedItemTable);
@@ -248,6 +273,15 @@ public class SupplierItems extends javax.swing.JFrame {
             }
         });
 
+        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel21.setText("Supplied Price:");
+
+        txtPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPriceActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -273,11 +307,15 @@ public class SupplierItems extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtItemID2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(60, 60, 60)
+                            .addComponent(txtItemID, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtItemName, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtItemName, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel21))))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -292,16 +330,22 @@ public class SupplierItems extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel19))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtItemName)
-                    .addComponent(txtItemID2))
-                .addGap(26, 26, 26)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPrice))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtItemID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtItemName)))
+                .addGap(26, 28, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -323,13 +367,13 @@ public class SupplierItems extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        SupplierItemList itemList = new SupplierItemList(SupplierID, SupplierName, savedItemTable);
+        SupplierItemList itemList = new SupplierItemList(SupplierID, SupplierName, savedItemTable, distance);
         itemList.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void txtItemID2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtItemID2ActionPerformed
+    private void txtItemIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtItemIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtItemID2ActionPerformed
+    }//GEN-LAST:event_txtItemIDActionPerformed
 
     private void txtItemNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtItemNameActionPerformed
         // TODO add your handling code here:
@@ -340,7 +384,7 @@ public class SupplierItems extends javax.swing.JFrame {
             return;
         }
 
-        String itemCode = txtItemID2.getText().trim();
+        String itemCode = txtItemID.getText().trim();
         int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete item "
             + itemCode +" ?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
 
@@ -348,6 +392,10 @@ public class SupplierItems extends javax.swing.JFrame {
             if (confirm == JOptionPane.YES_OPTION){
                 sm.deleteSupplierItem(SupplierID, itemCode);
                 sm.displaySupplierItems(SupplierID, savedItemTable);
+                savedItemTable.clearSelection(); // Prevent crash on repaint
+                DefaultTableModel itemTableModel = (DefaultTableModel) savedItemTable.getModel();
+                sorter = new TableRowSorter<>(itemTableModel);
+                savedItemTable.setRowSorter(sorter);
                 JOptionPane.showMessageDialog(null, "Item deleted successfully.");
                 clearFields();
             }else {
@@ -362,6 +410,10 @@ public class SupplierItems extends javax.swing.JFrame {
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnBack1ActionPerformed
+
+    private void txtPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPriceActionPerformed
 
     /**
      * @param args the command line arguments
@@ -412,13 +464,15 @@ public class SupplierItems extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable savedItemTable;
-    private javax.swing.JTextField txtItemID2;
+    private javax.swing.JTextField txtItemID;
     private javax.swing.JTextField txtItemName;
+    private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }
