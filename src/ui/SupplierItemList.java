@@ -350,8 +350,7 @@ public class SupplierItemList extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Repeated Item ID found in the Supplier Items table.");
         } else {
             sm.addItemCode(SupplierID, txtItemID2.getText().trim(), txtPrice.getText().trim());
-            sm.saveSupplier(SupplierID, SupplierName, distance);
-            JOptionPane.showMessageDialog(null, "Items saved.");
+            JOptionPane.showMessageDialog(null, "Items Successfully Added into the List.");
             try {
                 sm.displaySupplierItems(SupplierID, savedItemTable);
                 savedItemTable.repaint();
@@ -368,6 +367,8 @@ public class SupplierItemList extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdd2ActionPerformed
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
+        SupplierItems ItemSupply = new SupplierItems(SupplierID, SupplierName, distance);
+        ItemSupply.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBack1ActionPerformed
 

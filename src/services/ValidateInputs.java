@@ -9,5 +9,12 @@ package services;
  * @author lunwe
  */
 public class ValidateInputs {
-    
+    public static boolean isQuantityChanged(int originalQty, String inputQtyStr) {
+        try {
+            int inputQty = Integer.parseInt(inputQtyStr);
+            return inputQty != originalQty;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

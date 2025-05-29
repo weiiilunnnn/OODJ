@@ -18,10 +18,12 @@ public class PurchaseOrder implements ItemDependentRecord{
     private String status;
     private String SupplierID;
     private String SupplierPrice;
+    private boolean StockUpdate;
+    private boolean Verified;
     
     public PurchaseOrder() {}
 
-    public PurchaseOrder(String poID, String prID, String itemID, int quantity, String raisedBy, String date, String status, String SupplierID, String SupplierPrice) {
+    public PurchaseOrder(String poID, String prID, String itemID, int quantity, String raisedBy, String date, String status, String SupplierID, String SupplierPrice, boolean StockUpdate, boolean Verified) {
         this.poID = poID;
         this.prID = prID;
         this.itemID = itemID;
@@ -31,6 +33,8 @@ public class PurchaseOrder implements ItemDependentRecord{
         this.status = status;
         this.SupplierID = SupplierID;
         this.SupplierPrice = SupplierPrice;
+        this.StockUpdate = StockUpdate;
+        this.Verified = Verified;
     }
 
     public String getPoID() {
@@ -106,10 +110,27 @@ public class PurchaseOrder implements ItemDependentRecord{
     public void setSupplierPrice(String SupplierPrice) {
         this.SupplierPrice = SupplierPrice;
     }
+
+    public boolean isStockUpdate() {
+        return StockUpdate;
+    }
+
+    public void setStockUpdate(boolean StockUpdate) {
+        this.StockUpdate = StockUpdate;
+    }
+
+    public boolean isVerified() {
+        return Verified;
+    }
+
+    public void setVerified(boolean Verified) {
+        this.Verified = Verified;
+    }
     
     
     @Override
     public String toFileFormat() {
-        return poID + "," + prID + "," + itemID +"," + quantity + "," + raisedBy + "," + date + ","  + status + "," + SupplierID + "," + SupplierPrice ;
+        return poID + "," + prID + "," + itemID +"," + quantity + "," + raisedBy + "," + 
+                date + ","  + status + "," + SupplierID + "," + SupplierPrice + "," + StockUpdate + "," + Verified;
     }
 }

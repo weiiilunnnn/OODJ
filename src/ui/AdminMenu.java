@@ -40,6 +40,13 @@ public class AdminMenu extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btnUserRegistration = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        btnUserRegistration1 = new javax.swing.JButton();
+        btnUserRegistration2 = new javax.swing.JButton();
+        btnUserRegistration3 = new javax.swing.JButton();
+        btnUserRegistration4 = new javax.swing.JButton();
+        btnUserRegistration5 = new javax.swing.JButton();
+        btnUserRegistration6 = new javax.swing.JButton();
+        btnUserRegistration7 = new javax.swing.JButton();
         Patientitle = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
         btnQuit1 = new javax.swing.JButton();
@@ -64,6 +71,62 @@ public class AdminMenu extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/smallOSWB.png"))); // NOI18N
         jLabel3.setText("jLabel3");
 
+        btnUserRegistration1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUserRegistration1.setText("SUPPLIER ENTRY");
+        btnUserRegistration1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserRegistration1ActionPerformed(evt);
+            }
+        });
+
+        btnUserRegistration2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUserRegistration2.setText("ITEM ENTRY");
+        btnUserRegistration2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserRegistration2ActionPerformed(evt);
+            }
+        });
+
+        btnUserRegistration3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUserRegistration3.setText("PURCHASE REQUISITION");
+        btnUserRegistration3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserRegistration3ActionPerformed(evt);
+            }
+        });
+
+        btnUserRegistration4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUserRegistration4.setText("PURCHASE ORDER");
+        btnUserRegistration4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserRegistration4ActionPerformed(evt);
+            }
+        });
+
+        btnUserRegistration5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUserRegistration5.setText("PAYMENT");
+        btnUserRegistration5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserRegistration5ActionPerformed(evt);
+            }
+        });
+
+        btnUserRegistration6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUserRegistration6.setText("MANAGE STOCK");
+        btnUserRegistration6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserRegistration6ActionPerformed(evt);
+            }
+        });
+
+        btnUserRegistration7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUserRegistration7.setText("GENERATE REPORT");
+        btnUserRegistration7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserRegistration7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -75,7 +138,15 @@ public class AdminMenu extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addComponent(btnUserRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnUserRegistration2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUserRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUserRegistration1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUserRegistration3, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUserRegistration4, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUserRegistration5, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUserRegistration6, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUserRegistration7, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -85,7 +156,21 @@ public class AdminMenu extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(37, 37, 37)
                 .addComponent(btnUserRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUserRegistration2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUserRegistration1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUserRegistration3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUserRegistration4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUserRegistration5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUserRegistration6, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUserRegistration7, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         Patientitle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -136,9 +221,9 @@ public class AdminMenu extends javax.swing.JFrame {
                                     .addComponent(Patientitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(Patientitle, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(137, 137, 137)
+                                .addGap(136, 136, 136)
                                 .addComponent(jLabel1)))
-                        .addContainerGap(146, Short.MAX_VALUE))))
+                        .addContainerGap(147, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,9 +233,9 @@ public class AdminMenu extends javax.swing.JFrame {
                 .addComponent(Patientitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Patientitle1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGap(95, 95, 95)
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnQuit1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -165,7 +250,9 @@ public class AdminMenu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -191,6 +278,34 @@ public class AdminMenu extends javax.swing.JFrame {
         this.dispose();
         new UserRegistration((Admin) user).setVisible(true);
     }//GEN-LAST:event_btnUserRegistrationActionPerformed
+
+    private void btnUserRegistration1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserRegistration1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUserRegistration1ActionPerformed
+
+    private void btnUserRegistration2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserRegistration2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUserRegistration2ActionPerformed
+
+    private void btnUserRegistration3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserRegistration3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUserRegistration3ActionPerformed
+
+    private void btnUserRegistration4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserRegistration4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUserRegistration4ActionPerformed
+
+    private void btnUserRegistration5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserRegistration5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUserRegistration5ActionPerformed
+
+    private void btnUserRegistration6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserRegistration6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUserRegistration6ActionPerformed
+
+    private void btnUserRegistration7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserRegistration7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUserRegistration7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -233,6 +348,13 @@ public class AdminMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnQuit1;
     private javax.swing.JButton btnUserRegistration;
+    private javax.swing.JButton btnUserRegistration1;
+    private javax.swing.JButton btnUserRegistration2;
+    private javax.swing.JButton btnUserRegistration3;
+    private javax.swing.JButton btnUserRegistration4;
+    private javax.swing.JButton btnUserRegistration5;
+    private javax.swing.JButton btnUserRegistration6;
+    private javax.swing.JButton btnUserRegistration7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

@@ -57,4 +57,34 @@ public class ItemManager extends MainManager<Item>{
             item.getItemPrice(), item.getReorderLevel(), item.getFlagStatus()
         });
     }
+    
+    public void updateQuantity(String itemId, int newQty) {
+        List<Item> items = load();
+        boolean updated = false;
+
+        for (Item item : items) {
+            if (item.getItemID().equals(itemId)) {
+                item.setItemQty(newQty);
+                updated = true;
+                break;
+            }
+        }
+
+        if (updated) {
+            save(items);
+            System.out.println("Item quantity updated successfully.");
+        } else {
+            System.err.println("Item with ID " + itemId + " not found.");
+        }
+    }
+
+    public Item findItemById(String id) {
+        List<Item> items = load();
+        for (Item item : items) {
+            if (item.getItemID().equalsIgnoreCase(id)) {
+                return item;
+            }
+        }
+        return null;
+    }
 }

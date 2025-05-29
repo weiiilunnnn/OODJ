@@ -64,7 +64,7 @@ public class ViewPO extends javax.swing.JFrame {
                 return 0;
             }
         });
-
+        
         // Handle row selection
         tablePO.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {

@@ -244,7 +244,8 @@ public class SalesManagerMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreatePRActionPerformed
 
     private void btnDailySalesEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDailySalesEntryActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new DailySalesEntry((SalesManager) user).setVisible(true);
     }//GEN-LAST:event_btnDailySalesEntryActionPerformed
 
     private void btnSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplierActionPerformed

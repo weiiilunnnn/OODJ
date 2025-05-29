@@ -191,7 +191,7 @@ public class PRApproval extends javax.swing.JFrame {
         jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel25.setText("Required Date");
 
-        txtRestockQty.setEnabled(true);
+        txtRestockQty.setEnabled(false);
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel27.setText("Status");

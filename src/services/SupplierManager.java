@@ -165,15 +165,7 @@ public class SupplierManager extends MainManager<Supplier>{
             e.printStackTrace();
         }
     }
-    
-    public void saveSupplier(String supplierID, String supplierName, double distance) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Supplier.txt", true))) {
-            writer.write(supplierID + "," + supplierName + ",NA,NA," + distance);
-            writer.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public void deleteSupplierItem(String supplierID, String itemID) throws IOException {
         List<String> updatedLines = new ArrayList<>();
@@ -201,5 +193,41 @@ public class SupplierManager extends MainManager<Supplier>{
             }
         }
     }
+    
+    public Supplier findSupplierById(String id) {
+        List<Supplier> suppliers = load();
+        for (Supplier supplier : suppliers) {
+            if (supplier.getSupplierID().equalsIgnoreCase(id)) {
+                return supplier;
+            }
+        }
+        return null;
+    }
+    
+    public double getItemPrice(String supplierID, String itemID) {
+        try (BufferedReader br = new BufferedReader(new FileReader("SupplierList.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 3) {
+                    String sid = parts[0].trim();
+                    String iid = parts[1].trim();
+                    String priceStr = parts[2].trim();
 
+                    if (sid.equalsIgnoreCase(supplierID) && iid.equalsIgnoreCase(itemID)) {
+                        try {
+                            return Double.parseDouble(priceStr);
+                        } catch (NumberFormatException e) {
+                            System.err.println("Invalid price format for " + sid + " and " + iid);
+                            return 0.0;
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return 0.0; // Not found
+    }
 }

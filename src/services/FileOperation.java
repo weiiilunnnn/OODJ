@@ -34,6 +34,7 @@ public class FileOperation {
     public static final String SUPPLIER_FILE = "Supplier.txt";
     public static final String SPLIST_FILE = "SupplierList.txt";
     public static final String USER_FILE = "userData.txt";
+    public static final String PAYMENT_FILE = "Payment.txt";
     
     public static void ensureFileExists(String filePath) {
         File file = new File(filePath);
@@ -55,6 +56,7 @@ public class FileOperation {
         ensureFileExists(SUPPLIER_FILE);
         ensureFileExists(SPLIST_FILE);
         ensureFileExists(USER_FILE);
+        ensureFileExists(PAYMENT_FILE);
     }
     
     public static void WriteFile(Object obj) {
@@ -175,6 +177,32 @@ public class FileOperation {
         return itemMap;
     }
     
+    // Reads all lines from a file and returns them as a list of strings
+    public static List<String> readRawLines(String fileName) {
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                lines.add(line.trim());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
+    }
+
+    // Writes a list of strings back to the file
+    public static void writeRawLines(String fileName, List<String> lines) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
+            for (String line : lines) {
+                bw.write(line);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void deleteItemFromAllFile(String itemID, String prFilePath) {
         List<String> updatedPRLines = new ArrayList<>();
 
@@ -257,5 +285,21 @@ public class FileOperation {
         boolean poSaved = poManager.saveAll(poList);
 
         return success && prSaved && poSaved;
+    }
+    
+    public static Map<String, String> getSupplierMap() {
+        Map<String, String> supplierMap = new HashMap<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("Supplier.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length > 1) {
+                    supplierMap.put(parts[0], parts[1]); // SP ID -> Supplier Name
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();    
+        }
+        return supplierMap;
     }
 }

@@ -8,3 +8,4 @@ IM001,Tasha,123,Inventory Manager,017-7747774,tasha@mail.com
 AM002,Solana,123,Admin,019-9987777,sna@gmail.com
 AM003,Joe,123,Admin,018-7775555,joejoe@mail.com
 PM002,Timothy,123,Purchase Manager,018-7747774,123@mail.com
+PM003,John,12345,Purchase Manager,019-7107401,lunweii1025@gmail.com

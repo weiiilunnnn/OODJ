@@ -16,10 +16,12 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import models.FinanceManager;
 import models.PurchaseOrder;
 import models.User;
 import services.IDGenerator;
 import services.POManager;
+import ui.POApproval;
 
 /**
  *
@@ -32,12 +34,14 @@ public class GeneratePO extends javax.swing.JFrame {
     /**
      * Creates new form ChooseSupplier
      */
-    public GeneratePO(User user, String poID, String prID, String itemID, String itemName, String quantity, boolean isUpdate) {
+    public GeneratePO(User user, String poID, String prID, String itemID, String itemName, String quantity,
+                  String purchaseDate, boolean isUpdate,
+                  String supplierID, String supplierName, String distance, String price){
         this.user = user;
+        this.isUpdate = isUpdate; 
         initComponents();
         setLocationRelativeTo(null);
         
-        this.isUpdate = isUpdate; 
         this.poID = poID;
         
         txtPOID.setText(poID);           
@@ -46,11 +50,18 @@ public class GeneratePO extends javax.swing.JFrame {
         txtItemName.setText(itemName);
         txtRestockQty.setText(quantity);
 
-        if (isUpdate) {
-            btnGeneratePO.setText("Update PO");
-        } else {
-            btnGeneratePO.setText("Generate PO");
-            txtPOID.setText(IDGenerator.generateNextID("PO", "PurchaseOrder.txt"));
+        if (isUpdate && purchaseDate != null) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = sdf.parse(purchaseDate);
+                txtPurchasedDate.setDate(date);
+                txtSupplierID.setText(supplierID);
+                txtSupplierName.setText(supplierName);
+                txtDistance.setText(distance);
+                txtPrice.setText(price);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         
         
@@ -77,6 +88,11 @@ public class GeneratePO extends javax.swing.JFrame {
         }
     });
     }
+    
+    public GeneratePO(User user, String poID, String prID, String itemID, String itemName, String quantity, boolean isUpdate) {
+        this(user, poID, prID, itemID, itemName, quantity, null, isUpdate, "", "", "", "");
+    }
+
     
     private void loadSupplierData(String itemID) {
         DefaultTableModel model = (DefaultTableModel) tblSupplier.getModel();
@@ -546,7 +562,7 @@ public class GeneratePO extends javax.swing.JFrame {
             String prID = txtPRID.getText().trim();
             String itemID = txtItemID.getText().trim();
             int quantity = Integer.parseInt(txtRestockQty.getText().trim());
-            String purchaseDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            String purchaseDate = new SimpleDateFormat("yyyy-MM-dd").format(txtPurchasedDate.getDate());
             String supplierID = txtSupplierID.getText().trim();
             String suppliedPrice = txtPrice.getText().trim();
             String raisedBy = user.getUserID();
@@ -561,7 +577,7 @@ public class GeneratePO extends javax.swing.JFrame {
                 // Find the PO to update by poID
                 PurchaseOrder poToUpdate = null;
                 for (PurchaseOrder po : poList) {
-                    if (po.getPoID().equals(poID)) {
+                    if (po.getPoID().trim().equals(poID.trim())) {
                         poToUpdate = po;
                         break;
                     }
@@ -595,7 +611,7 @@ public class GeneratePO extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, isUpdate ? "Purchase Order updated!" : "Purchase Order generated and saved!");
                 this.dispose();
                 if (isUpdate) {
-                    new ViewPO(user).setVisible(true);
+                    new POApproval((FinanceManager)user).setVisible(true); 
                 } else {
                     new PRApproval(user).setVisible(true);
                 }

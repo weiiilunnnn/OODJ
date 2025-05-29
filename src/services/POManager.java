@@ -34,8 +34,8 @@ public class POManager extends MainManager<PurchaseOrder>{
     @Override
     protected PurchaseOrder parseLine(String line) {
         String[] parts = line.split(",");
-        if (parts.length == 9) {
-            return new PurchaseOrder(parts[0], parts[1], parts[2], Integer.parseInt(parts[3]), parts[4], parts[5], parts[6], parts[7], parts[8]);
+        if (parts.length == 11) {
+            return new PurchaseOrder(parts[0], parts[1], parts[2], Integer.parseInt(parts[3]), parts[4], parts[5], parts[6], parts[7], parts[8], Boolean.parseBoolean(parts[9]), Boolean.parseBoolean(parts[10]));
         }
         return null;
     }
@@ -76,7 +76,7 @@ public class POManager extends MainManager<PurchaseOrder>{
             return new Object[]{
                 po.getPoID(), po.getPrID(), po.getItemID(), itemName,
                 po.getQuantity(), po.getRaisedBy(), po.getDate(), po.getStatus(),
-                po.getSupplierID(), po.getSupplierPrice()
+                po.getSupplierID(), po.getSupplierPrice(), false, false
             };
         });
     }
@@ -253,5 +253,63 @@ public class POManager extends MainManager<PurchaseOrder>{
             e.printStackTrace();
             return false;
         }
+    }
+    
+    public PurchaseOrder getById(String poId) {
+        if (poId == null) return null;
+        List<PurchaseOrder> PO = load();
+        System.out.println("Checking PO_list: " + PO);
+
+        for (PurchaseOrder po : PO) {
+            System.out.println("Checking PO: " + po.getPoID());
+        }
+
+        return PO.stream()
+            .filter(po -> poId.trim().equals(po.getPoID().trim()))
+            .findFirst()
+            .orElse(null);
+    }
+    
+    public boolean updatePOStatus(String poID, String newStatus) {
+        List<String> lines = FileOperation.readRawLines("PurchaseOrder.txt");
+        boolean updated = false;
+
+        for (int i = 0; i < lines.size(); i++) {
+            String[] parts = lines.get(i).split(",");
+            if (parts[0].equals(poID)) {
+                parts[6] = newStatus;
+                lines.set(i, String.join(",", parts));
+                updated = true;
+                break;
+            }
+        }
+
+        if (updated) {
+            FileOperation.writeRawLines("PurchaseOrder.txt", lines);
+        }
+
+        return updated;
+    }
+    
+    public boolean updateStatus(String poID) {
+        List<PurchaseOrder> poList = load(); // Load existing POs
+        boolean updated = false;
+
+        for (PurchaseOrder po : poList) {
+            if (po.getPoID().equals(poID)) {
+                po.setStockUpdate(true);
+                updated = true;
+                break;
+            }
+        }
+
+        if (updated) {
+            saveAll(poList); // Save the updated list back to file
+            System.out.println("PO status updated successfully.");
+        } else {
+            System.err.println("PO with ID " + poID + " not found.");
+        }
+
+        return updated;
     }
 }
