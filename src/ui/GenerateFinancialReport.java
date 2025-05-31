@@ -8,21 +8,18 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormatSymbols;
-import java.time.LocalDate;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import models.Admin;
+import models.FinanceManager;
 import models.User;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import services.pdf.FinancialReportPdfGenerator;
-import services.pdf.RecieptPdfGenerator;
-import services.StockReportGenerator;
 
 /**
  *
@@ -310,10 +307,15 @@ public class GenerateFinancialReport extends javax.swing.JFrame {
     }//GEN-LAST:event_DownloadBtnActionPerformed
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
-        // TODO add your handling code here:
-        FinanceManagerMenu FM = new FinanceManagerMenu(user);
         this.dispose();
-        FM.setVisible(true);
+
+        if (user instanceof FinanceManager) {
+            new FinanceManagerMenu((FinanceManager) user).setVisible(true);
+        } else if (user instanceof Admin) {
+            new AdminMenu((Admin) user).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Can't recognize the Character.", "Access Denied", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_BackBtnActionPerformed
 
     private void GenerateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerateButtonActionPerformed

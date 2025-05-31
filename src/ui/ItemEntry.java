@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import models.Admin;
+import models.InventoryManager;
 import models.Item;
+import models.PurchaseManager;
+import models.SalesManager;
 import services.FileOperation;
 import services.IDGenerator;
 import services.ItemManager;
-import services.PRManager;
-import services.SupplierManager;
 
 /**
  *
@@ -37,6 +39,15 @@ public class ItemEntry extends javax.swing.JFrame {
         this.user = user;
         initComponents();
         setLocationRelativeTo(null);
+        
+        // Disable editing buttons for certain roles
+        if (user instanceof PurchaseManager || user instanceof InventoryManager) {
+            btnAddItem.setVisible(false);
+            btnUpdateItem.setVisible(false);
+            btnDeleteItem.setVisible(false);
+            btnClearForm.setVisible(false);
+        }
+        
         itemList = manager.load();
         tableModel = manager.getItemTableModel();
         tblItems.setModel(tableModel);
@@ -444,6 +455,12 @@ public class ItemEntry extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemActionPerformed
+        if (user instanceof PurchaseManager || user instanceof InventoryManager) {
+            btnAddItem.setEnabled(false);
+            btnUpdateItem.setEnabled(false);
+            btnDeleteItem.setEnabled(false);
+        }
+        
         if (!validateInputs()) return;
 
         String id = IDGenerator.generateNextID("ITM","Item.txt");
@@ -470,6 +487,12 @@ public class ItemEntry extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddItemActionPerformed
 
     private void btnUpdateItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateItemActionPerformed
+        if (user instanceof PurchaseManager || user instanceof InventoryManager) {
+            btnAddItem.setEnabled(false);
+            btnUpdateItem.setEnabled(false);
+            btnDeleteItem.setEnabled(false);
+        }
+        
         int selectedRow = tblItems.getSelectedRow();
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(this, "Please select an item to update.");
@@ -502,6 +525,12 @@ public class ItemEntry extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateItemActionPerformed
 
     private void btnDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteItemActionPerformed
+        if (user instanceof PurchaseManager || user instanceof InventoryManager) {
+            btnAddItem.setEnabled(false);
+            btnUpdateItem.setEnabled(false);
+            btnDeleteItem.setEnabled(false);
+        }        
+        
         int selectedRow = tblItems.getSelectedRow();
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(this, "Please select an item to delete.");
@@ -550,7 +579,19 @@ public class ItemEntry extends javax.swing.JFrame {
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         this.dispose();
-        new SalesManagerMenu(user).setVisible(true);
+
+        if (user instanceof Admin) {
+            new AdminMenu((Admin) user).setVisible(true);
+        } else if (user instanceof PurchaseManager) {
+            new PurchaseManagerMenu((PurchaseManager) user).setVisible(true);
+        } else if (user instanceof SalesManager) {
+            new SalesManagerMenu((SalesManager) user).setVisible(true);
+        } else if (user instanceof InventoryManager) {
+            new InventoryManagerMenu((InventoryManager) user).setVisible(true);
+        } else {
+            // Optional: handle unknown user type
+            JOptionPane.showMessageDialog(null, "Unknown user type. Cannot navigate back.");
+        }
     }//GEN-LAST:event_btnBack1ActionPerformed
 
     /**

@@ -15,7 +15,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import models.Admin;
+import models.FinanceManager;
 import models.Item;
+import models.PurchaseManager;
+import models.SalesManager;
 import models.User;
 import services.FileOperation;
 import services.ItemManager;
@@ -510,9 +514,16 @@ public class DailySalesEntry extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
-        SalesManagerMenu sm = new SalesManagerMenu(user);
         this.dispose();
-        sm.setVisible(true);
+
+        if (user instanceof SalesManager) {
+            new SalesManagerMenu((SalesManager) user).setVisible(true);
+        } else if (user instanceof Admin) {
+            new AdminMenu((Admin) user).setVisible(true);
+        } else {
+            // Optional: handle unknown user type
+            JOptionPane.showMessageDialog(null, "Unknown user type. Cannot navigate back.");
+        }
     }//GEN-LAST:event_BackBtnActionPerformed
 
     private void ItemNameTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ItemNameTfActionPerformed

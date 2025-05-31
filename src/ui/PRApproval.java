@@ -371,10 +371,11 @@ public class PRApproval extends javax.swing.JFrame {
         String itemID = tblRequisitions.getValueAt(row, 1).toString(); // Item ID
         String itemName = tblRequisitions.getValueAt(row, 2).toString(); // Item Name
         String quantity = tblRequisitions.getValueAt(row, 3).toString(); // Quantity (Restock Qty)
+        String status = "Pending";
 
         // Pass data to GeneratePO form
         String newPOID = IDGenerator.generateNextID("PO", "PurchaseOrder.txt");
-        GeneratePO generatePOPage = new GeneratePO(user, newPOID, prID, itemID, itemName, quantity, false);
+        GeneratePO generatePOPage = new GeneratePO(user, newPOID, prID, itemID, itemName, quantity, status, false, false);
         generatePOPage.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnApproveActionPerformed
@@ -403,7 +404,7 @@ public class PRApproval extends javax.swing.JFrame {
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         this.dispose();
-        new ViewPO((PurchaseManager) user).setVisible(true);
+        new ViewPO(user).setVisible(true);
     }//GEN-LAST:event_btnBack1ActionPerformed
 
     private void tblRequisitionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRequisitionsMouseClicked

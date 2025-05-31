@@ -12,6 +12,9 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import models.Admin;
+import models.FinanceManager;
+import models.PurchaseManager;
 import models.PurchaseRequisition;
 import models.SalesManager;
 import models.User;
@@ -38,6 +41,14 @@ public class ViewPR extends javax.swing.JFrame {
         this.user = user;
         initComponents();
         setLocationRelativeTo(null);
+        
+        if (user instanceof PurchaseManager || user instanceof FinanceManager) {
+            btnUpdatePR.setVisible(false);
+            btnDeletePR.setVisible(false);
+            btnClearForm.setVisible(false);
+            btnCreateNew.setVisible(false);
+        }
+        
         PRList = manager.load();
         tableModel = manager.getPRTableModel();
         tablePR.setModel(tableModel);
@@ -161,10 +172,10 @@ public class ViewPR extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         txtPRID = new javax.swing.JTextField();
         txtSearch = new javax.swing.JTextField();
-        btnUpdateItem = new javax.swing.JButton();
+        btnUpdatePR = new javax.swing.JButton();
         ItemNameLabel = new javax.swing.JLabel();
         ItemQtyLabel = new javax.swing.JLabel();
-        btnDeleteItem = new javax.swing.JButton();
+        btnDeletePR = new javax.swing.JButton();
         ItemNameLabel1 = new javax.swing.JLabel();
         btnBack1 = new javax.swing.JButton();
         btnClearForm = new javax.swing.JButton();
@@ -222,12 +233,12 @@ public class ViewPR extends javax.swing.JFrame {
 
         txtPRID.setEnabled(false);
 
-        btnUpdateItem.setBackground(new java.awt.Color(51, 204, 255));
-        btnUpdateItem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnUpdateItem.setText("Update");
-        btnUpdateItem.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdatePR.setBackground(new java.awt.Color(51, 204, 255));
+        btnUpdatePR.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUpdatePR.setText("Update");
+        btnUpdatePR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateItemActionPerformed(evt);
+                btnUpdatePRActionPerformed(evt);
             }
         });
 
@@ -237,12 +248,12 @@ public class ViewPR extends javax.swing.JFrame {
         ItemQtyLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         ItemQtyLabel.setText("Item Name:");
 
-        btnDeleteItem.setBackground(new java.awt.Color(255, 51, 51));
-        btnDeleteItem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnDeleteItem.setText("Delete");
-        btnDeleteItem.addActionListener(new java.awt.event.ActionListener() {
+        btnDeletePR.setBackground(new java.awt.Color(255, 51, 51));
+        btnDeletePR.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnDeletePR.setText("Delete");
+        btnDeletePR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteItemActionPerformed(evt);
+                btnDeletePRActionPerformed(evt);
             }
         });
 
@@ -317,22 +328,21 @@ public class ViewPR extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(ItemNameLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, Short.MAX_VALUE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnUpdateItem, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(29, 29, 29)
-                            .addComponent(btnDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(30, 30, 30)
-                            .addComponent(btnClearForm, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap(364, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnCreateNew, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ItemNameLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCreateNew, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnUpdatePR, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(btnDeletePR, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(btnClearForm, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -363,7 +373,7 @@ public class ViewPR extends javax.swing.JFrame {
                                         .addComponent(txtPRStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(FlagStatusLabel)))
                                 .addComponent(btnBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                        .addContainerGap(49, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -387,16 +397,16 @@ public class ViewPR extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtPRStatus)
-                    .addComponent(txtRequiredDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtPRID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtItemID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtItemName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtRestockQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtRestockQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtRequiredDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnUpdateItem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdatePR, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeletePR, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClearForm, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31))
@@ -416,7 +426,7 @@ public class ViewPR extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnUpdateItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateItemActionPerformed
+    private void btnUpdatePRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePRActionPerformed
         int selectedRow = tablePR.getSelectedRow();
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(this, "Please select an item to update.");
@@ -458,9 +468,9 @@ public class ViewPR extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Update cancelled.");
         }
-    }//GEN-LAST:event_btnUpdateItemActionPerformed
+    }//GEN-LAST:event_btnUpdatePRActionPerformed
 
-    private void btnDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteItemActionPerformed
+    private void btnDeletePRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePRActionPerformed
         int selectedRow = tablePR.getSelectedRow();
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(this, "Please select a PR item to delete.");
@@ -497,11 +507,23 @@ public class ViewPR extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Deletion cancelled.");
         }
-    }//GEN-LAST:event_btnDeleteItemActionPerformed
+    }//GEN-LAST:event_btnDeletePRActionPerformed
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         this.dispose();
-        new SalesManagerMenu(user).setVisible(true);
+
+        if (user instanceof PurchaseManager) {
+            new PurchaseManagerMenu((PurchaseManager) user).setVisible(true);
+        } else if (user instanceof SalesManager) {
+            new SalesManagerMenu((SalesManager) user).setVisible(true);
+        } else if (user instanceof Admin) {
+            new AdminMenu((Admin) user).setVisible(true);
+        } else if (user instanceof FinanceManager) {
+            new FinanceManagerMenu((FinanceManager) user).setVisible(true);
+        } else {
+            // Optional: handle unknown user type
+            JOptionPane.showMessageDialog(null, "Unknown user type. Cannot navigate back.");
+        }
     }//GEN-LAST:event_btnBack1ActionPerformed
 
     private void btnClearFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearFormActionPerformed
@@ -510,7 +532,14 @@ public class ViewPR extends javax.swing.JFrame {
 
     private void btnCreateNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateNewActionPerformed
         this.dispose();
-        new CreatePR((SalesManager) user).setVisible(true);
+
+        if (user instanceof SalesManager) {
+            new CreatePR((SalesManager) user).setVisible(true);
+        } else if (user instanceof Admin) {
+            new CreatePR((Admin) user).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "You are not authorized to create a PR.", "Access Denied", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnCreateNewActionPerformed
 
     /**
@@ -559,8 +588,8 @@ public class ViewPR extends javax.swing.JFrame {
     private javax.swing.JButton btnBack1;
     private javax.swing.JButton btnClearForm;
     private javax.swing.JButton btnCreateNew;
-    private javax.swing.JButton btnDeleteItem;
-    private javax.swing.JButton btnUpdateItem;
+    private javax.swing.JButton btnDeletePR;
+    private javax.swing.JButton btnUpdatePR;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JPanel jPanel1;

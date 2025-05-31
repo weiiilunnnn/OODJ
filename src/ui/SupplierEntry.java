@@ -10,6 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import models.Admin;
+import models.PurchaseManager;
+import models.SalesManager;
 import models.Supplier;
 import models.User;
 import services.IDGenerator;
@@ -32,7 +35,15 @@ public class SupplierEntry extends javax.swing.JFrame {
     public SupplierEntry(User user) {
         this.user = user;
         initComponents();                     
-        setLocationRelativeTo(null);          
+        setLocationRelativeTo(null); 
+        
+        // Disable editing buttons for certain roles
+        if (user instanceof PurchaseManager) {
+            btnAdd.setVisible(false);
+            btnUpdate.setVisible(false);
+            btnDelete.setVisible(false);
+            btnCancel.setVisible(false);
+        }
         supplierList = sm.load();   
         tableModel = sm.getSupplierTableModel();  
         tblSupplier.setModel(tableModel);     
@@ -437,7 +448,7 @@ public class SupplierEntry extends javax.swing.JFrame {
         String supplierName = txtSupplierName.getText();
         double distance = Double.parseDouble(txtDistance.getText());
 
-        SupplierItems ItemSupply = new SupplierItems(supplierID, supplierName, distance);
+        SupplierItems ItemSupply = new SupplierItems(supplierID, supplierName, distance, user);
         ItemSupply.setVisible(true);
     }//GEN-LAST:event_btnItemSupplyActionPerformed
 
@@ -526,7 +537,17 @@ public class SupplierEntry extends javax.swing.JFrame {
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         this.dispose();
-        new SalesManagerMenu(user).setVisible(true);
+
+        if (user instanceof PurchaseManager) {
+            new PurchaseManagerMenu((PurchaseManager) user).setVisible(true);
+        } else if (user instanceof SalesManager) {
+            new SalesManagerMenu((SalesManager) user).setVisible(true);
+        } else if (user instanceof Admin) {
+            new AdminMenu((Admin) user).setVisible(true);
+        } else {
+            // Optional: handle unknown user type
+            JOptionPane.showMessageDialog(null, "Unknown user type. Cannot navigate back.");
+        }
     }//GEN-LAST:event_btnBack1ActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed

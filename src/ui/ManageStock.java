@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import models.Admin;
 import models.InventoryManager;
 import models.Item;
 import models.PurchaseOrder;
@@ -39,10 +40,16 @@ public class ManageStock extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
         POManager poManager = new POManager();
+        System.out.println("poManager: " + poManager);
         List<PurchaseOrder> poList = poManager.load(); // Load all POs
+        System.out.println("poManager load: " + poManager.load());
+
+        
 
         for (PurchaseOrder po : poList) {
+            System.out.println("po: " + po);
             if ("Approved".equalsIgnoreCase(po.getStatus()) && !po.isStockUpdate()) {
+                
                 Object[] row = {
                     po.getPoID(),
                     po.getItemID(),
@@ -336,12 +343,13 @@ public class ManageStock extends javax.swing.JFrame {
         String currentItemId = txtItemID.getText().trim();
         int currentSalesQty = Integer.parseInt(txtRestockQty.getText().trim());
 
+        
         // Step 1: Update item quantity
         ItemManager itemManager = new ItemManager();
         System.out.println(currentItemId);
         Item item = itemManager.findItemById(currentItemId);
         System.out.println(item);
-
+        
         if (item == null) {
             JOptionPane.showMessageDialog(null, "Item not found.");
             return;
@@ -366,9 +374,16 @@ public class ManageStock extends javax.swing.JFrame {
     }//GEN-LAST:event_UpdateButtonActionPerformed
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
-        InventoryManagerMenu im = new InventoryManagerMenu(user);
         this.dispose();
-        im.setVisible(true);
+
+        if (user instanceof InventoryManager) {
+            new InventoryManagerMenu((InventoryManager) user).setVisible(true);
+        } else if (user instanceof Admin) {
+            new AdminMenu((Admin) user).setVisible(true);
+        } else {
+            // Optional: handle unknown user type
+            JOptionPane.showMessageDialog(null, "Unknown user type. Cannot navigate back.");
+        }
     }//GEN-LAST:event_btnBack1ActionPerformed
 
     /**

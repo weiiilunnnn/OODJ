@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import models.Admin;
 import models.FinanceManager;
 import models.User;
 import services.FileOperation;
@@ -430,6 +431,18 @@ public class POApproval extends javax.swing.JFrame {
         }
 
         String poID = tblRequisitions.getValueAt(row, 0).toString();
+        
+        int confirm  = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to approve PO ID: " + poID + "?",
+            "Confirm Approval",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE
+        );
+        
+        if (confirm != JOptionPane.YES_OPTION) {
+            return; // User chose No
+        }
 
         POManager manager = new POManager();
         boolean success = manager.updatePOStatus(poID, "Approved");
@@ -451,6 +464,17 @@ public class POApproval extends javax.swing.JFrame {
         }
 
         String poID = tblRequisitions.getValueAt(row, 0).toString();
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to reject PO ID: " + poID + "?",
+            "Confirm Rejection",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return; // User chose No
+        }
 
         POManager manager = new POManager();
         boolean success = manager.updatePOStatus(poID, "Rejected");
@@ -482,7 +506,15 @@ public class POApproval extends javax.swing.JFrame {
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         this.dispose();
-        new FinanceManagerMenu((FinanceManager) user).setVisible(true);
+
+        if (user instanceof Admin) {
+            new AdminMenu((Admin) user).setVisible(true);
+        } else if (user instanceof FinanceManager) {
+            new FinanceManagerMenu((FinanceManager) user).setVisible(true);
+        } else {
+            // Optional: handle unknown user type
+            JOptionPane.showMessageDialog(null, "Unknown user type. Cannot navigate back.");
+        }
     }//GEN-LAST:event_btnBack1ActionPerformed
 
     private void tblRequisitionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRequisitionsMouseClicked
@@ -524,10 +556,11 @@ public class POApproval extends javax.swing.JFrame {
         String supplierName = tblRequisitions.getValueAt(row, 9).toString();
         String distance = tblRequisitions.getValueAt(row, 10).toString();
         String price = tblRequisitions.getValueAt(row, 10).toString();
+        String status = tblRequisitions.getValueAt(row,7).toString();
 
         GeneratePO generatePO = new GeneratePO(
             user, poID, prID, itemID, itemName, quantity,
-            purchaseDate, true, supplierID, supplierName, distance, price
+            purchaseDate, status, true, true, supplierID, supplierName, distance, price
         );
         generatePO.setVisible(true);
         this.dispose();

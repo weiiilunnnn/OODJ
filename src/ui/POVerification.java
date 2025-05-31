@@ -10,8 +10,11 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import models.Admin;
 import models.FinanceManager;
 import models.Payment;
+import models.PurchaseManager;
+import models.SalesManager;
 import models.User;
 import services.FileOperation;
 import services.IDGenerator;
@@ -57,7 +60,7 @@ public class POVerification extends javax.swing.JFrame {
 
         for (String line : lines) {
             String[] parts = line.split(",");
-            if (parts.length >= 10 && parts[6].equalsIgnoreCase("Approved") && parts[9].equalsIgnoreCase("true") && parts[10].equalsIgnoreCase("false")) {
+            if (parts.length >= 11 && parts[6].equalsIgnoreCase("Approved") &&  parts[10].equalsIgnoreCase("false")) {
                 String itemName = itemMap.getOrDefault(parts[2], "Unknown Item");
                 String supplierName = supplierMap.getOrDefault(parts[7], "Unknown Supplier");
                 
@@ -97,7 +100,6 @@ public class POVerification extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         btnVerify = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
@@ -165,16 +167,6 @@ public class POVerification extends javax.swing.JFrame {
         btnVerify.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerifyActionPerformed(evt);
-            }
-        });
-
-        btnDelete.setBackground(new java.awt.Color(255, 0, 0));
-        btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnDelete.setForeground(new java.awt.Color(255, 255, 255));
-        btnDelete.setText("Delete");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
             }
         });
 
@@ -368,9 +360,7 @@ public class POVerification extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnVerify, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(43, 43, 43))
         );
@@ -388,7 +378,6 @@ public class POVerification extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVerify, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 19, Short.MAX_VALUE))
         );
@@ -449,28 +438,6 @@ public class POVerification extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnVerifyActionPerformed
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        int row = tblRequisitions.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a PO to delete.");
-            return;
-        }
-
-        String poID = tblRequisitions.getValueAt(row, 0).toString();
-        List<String> lines = FileOperation.readRawLines("PurchaseOrder.txt");
-
-        boolean deleted = lines.removeIf(line -> line.startsWith(poID + ","));
-
-        if (deleted) {
-            FileOperation.writeRawLines("PurchaseOrder.txt", lines);
-            JOptionPane.showMessageDialog(this, "PO deleted successfully.");
-            loadPOTable();
-            clearDetails();
-        } else {
-            JOptionPane.showMessageDialog(this, "Failed to delete PO.");
-        }
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
     private void txtRestockQtyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRestockQtyActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRestockQtyActionPerformed
@@ -489,7 +456,15 @@ public class POVerification extends javax.swing.JFrame {
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         this.dispose();
-        new FinanceManagerMenu((FinanceManager) user).setVisible(true);
+
+        if (user instanceof Admin) {
+            new AdminMenu((Admin) user).setVisible(true);
+        } else if (user instanceof FinanceManager) {
+            new FinanceManagerMenu((FinanceManager) user).setVisible(true);
+        } else {
+            // Optional: handle unknown user type
+            JOptionPane.showMessageDialog(null, "Unknown user type. Cannot navigate back.");
+        }
     }//GEN-LAST:event_btnBack1ActionPerformed
 
     private void tblRequisitionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRequisitionsMouseClicked
@@ -552,7 +527,6 @@ public class POVerification extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack1;
-    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnVerify;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;

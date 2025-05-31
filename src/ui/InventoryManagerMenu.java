@@ -7,6 +7,7 @@ package ui;
 import javax.swing.JOptionPane;
 import login.LoginGUI;
 import models.InventoryManager;
+import models.SalesManager;
 import models.User;
 
 /**
@@ -39,7 +40,7 @@ public class InventoryManagerMenu extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         btnTrackLowStock = new javax.swing.JButton();
         btnGenerateStockReport = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnViewPO = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         Patientitle = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
@@ -57,6 +58,11 @@ public class InventoryManagerMenu extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("VIEW ITEMS");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         btnTrackLowStock.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnTrackLowStock.setText("MANAGE STOCK");
@@ -74,11 +80,11 @@ public class InventoryManagerMenu extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton6.setText("VIEW PURCHASE ORDERS");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnViewPO.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnViewPO.setText("VIEW PURCHASE ORDERS");
+        btnViewPO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnViewPOActionPerformed(evt);
             }
         });
 
@@ -100,7 +106,7 @@ public class InventoryManagerMenu extends javax.swing.JFrame {
                             .addComponent(btnGenerateStockReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnTrackLowStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnViewPO, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -115,7 +121,7 @@ public class InventoryManagerMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnGenerateStockReport, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnViewPO, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -231,9 +237,10 @@ public class InventoryManagerMenu extends javax.swing.JFrame {
         new GenerateStockReport((InventoryManager) user).setVisible(true);
     }//GEN-LAST:event_btnGenerateStockReportActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void btnViewPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPOActionPerformed
+        this.dispose();
+        new ViewPO((InventoryManager) user).setVisible(true);
+    }//GEN-LAST:event_btnViewPOActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to Log Out?", "Log Out", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -254,6 +261,11 @@ public class InventoryManagerMenu extends javax.swing.JFrame {
     private void btnLowStockAlertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLowStockAlertActionPerformed
         new LowStockAlert((InventoryManager) user).setVisible(true);
     }//GEN-LAST:event_btnLowStockAlertActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+        new ItemEntry((InventoryManager) user).setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -298,8 +310,8 @@ public class InventoryManagerMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnLowStockAlert;
     private javax.swing.JButton btnQuit1;
     private javax.swing.JButton btnTrackLowStock;
+    private javax.swing.JButton btnViewPO;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

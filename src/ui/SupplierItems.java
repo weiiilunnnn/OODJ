@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import models.PurchaseManager;
+import models.User;
 import services.SupplierManager;
 
 /**
@@ -23,17 +25,27 @@ public class SupplierItems extends javax.swing.JFrame {
     private SupplierManager sm = new SupplierManager();
     private DefaultTableModel tableModel;
     private TableRowSorter<DefaultTableModel> sorter;
+    private User user;
 
     
-    public SupplierItems(String SupplierID, String SupplierName, double distance) {
+    public SupplierItems(String SupplierID, String SupplierName, double distance, User user) {
         this.SupplierID = SupplierID;
         this.SupplierName = SupplierName;
         this.distance = distance;
+        this.user = user;
+        
         initComponents();                      
         setLocationRelativeTo(null);         
         txtItemID.setEnabled(false);
         txtItemName.setEnabled(false);
         txtPrice.setEnabled(false);
+        
+        // Check role and hide buttons if needed
+        if (user instanceof PurchaseManager) {
+            btnAddItem.setVisible(false);
+            btnDeleteItem.setVisible(false);
+        }
+        
         DefaultTableModel itemTableModel = (DefaultTableModel) savedItemTable.getModel();
         sorter = new TableRowSorter<>(itemTableModel);
         savedItemTable.setRowSorter(sorter);
@@ -112,13 +124,13 @@ public class SupplierItems extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnAddItem = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         txtItemID = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         txtItemName = new javax.swing.JTextField();
-        btnDelete2 = new javax.swing.JButton();
+        btnDeleteItem = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         savedItemTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -167,13 +179,13 @@ public class SupplierItems extends javax.swing.JFrame {
                 .addGap(24, 24, 24))
         );
 
-        jButton1.setBackground(new java.awt.Color(15, 1, 71));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("+ Add Item");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAddItem.setBackground(new java.awt.Color(15, 1, 71));
+        btnAddItem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAddItem.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddItem.setText("+ Add Item");
+        btnAddItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAddItemActionPerformed(evt);
             }
         });
 
@@ -195,12 +207,12 @@ public class SupplierItems extends javax.swing.JFrame {
             }
         });
 
-        btnDelete2.setBackground(new java.awt.Color(255, 0, 51));
-        btnDelete2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnDelete2.setText("Delete Item");
-        btnDelete2.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteItem.setBackground(new java.awt.Color(255, 0, 51));
+        btnDeleteItem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnDeleteItem.setText("Delete Item");
+        btnDeleteItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDelete2ActionPerformed(evt);
+                btnDeleteItemActionPerformed(evt);
             }
         });
 
@@ -293,7 +305,7 @@ public class SupplierItems extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnDelete2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(btnBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -302,7 +314,7 @@ public class SupplierItems extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnAddItem, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,7 +340,7 @@ public class SupplierItems extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAddItem, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -347,7 +359,7 @@ public class SupplierItems extends javax.swing.JFrame {
                         .addComponent(txtItemName)))
                 .addGap(26, 28, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDelete2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21))
         );
@@ -366,11 +378,11 @@ public class SupplierItems extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        SupplierItemList itemList = new SupplierItemList(SupplierID, SupplierName, savedItemTable, distance);
+    private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemActionPerformed
+        SupplierItemList itemList = new SupplierItemList(SupplierID, SupplierName, savedItemTable, distance, user);
         itemList.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAddItemActionPerformed
 
     private void txtItemIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtItemIDActionPerformed
         // TODO add your handling code here:
@@ -380,7 +392,7 @@ public class SupplierItems extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtItemNameActionPerformed
 
-    private void btnDelete2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete2ActionPerformed
+    private void btnDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteItemActionPerformed
         if(!validateInputs()){
             return;
         }
@@ -406,7 +418,7 @@ public class SupplierItems extends javax.swing.JFrame {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error deleting item: " + e.getMessage());
         }
-    }//GEN-LAST:event_btnDelete2ActionPerformed
+    }//GEN-LAST:event_btnDeleteItemActionPerformed
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         this.dispose();
@@ -453,9 +465,9 @@ public class SupplierItems extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddItem;
     private javax.swing.JButton btnBack1;
-    private javax.swing.JButton btnDelete2;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnDeleteItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;

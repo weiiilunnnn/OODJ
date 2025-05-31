@@ -50,7 +50,7 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="btnDelete2" min="-2" pref="112" max="-2" attributes="0"/>
+                              <Component id="btnDeleteItem" min="-2" pref="112" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnBack1" min="-2" pref="109" max="-2" attributes="0"/>
                           </Group>
@@ -60,7 +60,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="txtSearch" min="-2" pref="168" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jButton1" min="-2" pref="104" max="-2" attributes="0"/>
+                                  <Component id="btnAddItem" min="-2" pref="104" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jScrollPane2" alignment="1" min="-2" pref="626" max="-2" attributes="0"/>
                           </Group>
@@ -96,7 +96,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton1" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="btnAddItem" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane2" pref="199" max="32767" attributes="0"/>
@@ -120,7 +120,7 @@
                   </Group>
                   <EmptySpace min="26" pref="28" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnDelete2" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="btnDeleteItem" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="btnBack1" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
@@ -185,7 +185,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnAddItem">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="47" green="1" red="f" type="rgb"/>
@@ -199,7 +199,7 @@
             <Property name="text" type="java.lang.String" value="+ Add Item"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddItemActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtSearch">
@@ -230,7 +230,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtItemNameActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnDelete2">
+        <Component class="javax.swing.JButton" name="btnDeleteItem">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="0" red="ff" type="rgb"/>
@@ -241,7 +241,7 @@
             <Property name="text" type="java.lang.String" value="Delete Item"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDelete2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteItemActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">

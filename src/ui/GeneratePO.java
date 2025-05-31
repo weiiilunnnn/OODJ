@@ -16,12 +16,9 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import models.FinanceManager;
 import models.PurchaseOrder;
 import models.User;
-import services.IDGenerator;
 import services.POManager;
-import ui.POApproval;
 
 /**
  *
@@ -29,18 +26,25 @@ import ui.POApproval;
  */
 public class GeneratePO extends javax.swing.JFrame {
     private User user;
-    private boolean isUpdate;   
+    private boolean isUpdate;
+    private boolean fromPOApproval;
     private String poID;
     /**
      * Creates new form ChooseSupplier
      */
     public GeneratePO(User user, String poID, String prID, String itemID, String itemName, String quantity,
-                  String purchaseDate, boolean isUpdate,
+                  String purchaseDate, String status, boolean isUpdate, boolean fromPOApproval,
                   String supplierID, String supplierName, String distance, String price){
         this.user = user;
         this.isUpdate = isUpdate; 
+        this.fromPOApproval = fromPOApproval;
         initComponents();
         setLocationRelativeTo(null);
+        
+        if (isUpdate) {
+            btnGeneratePO.setText("Update PO"); 
+//            txtStatus.setEnabled(true);
+        }
         
         this.poID = poID;
         
@@ -49,6 +53,7 @@ public class GeneratePO extends javax.swing.JFrame {
         txtItemID.setText(itemID);
         txtItemName.setText(itemName);
         txtRestockQty.setText(quantity);
+        txtStatus.setText(status);
 
         if (isUpdate && purchaseDate != null) {
             try {
@@ -59,6 +64,7 @@ public class GeneratePO extends javax.swing.JFrame {
                 txtSupplierName.setText(supplierName);
                 txtDistance.setText(distance);
                 txtPrice.setText(price);
+                txtStatus.setText(status);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -89,8 +95,8 @@ public class GeneratePO extends javax.swing.JFrame {
     });
     }
     
-    public GeneratePO(User user, String poID, String prID, String itemID, String itemName, String quantity, boolean isUpdate) {
-        this(user, poID, prID, itemID, itemName, quantity, null, isUpdate, "", "", "", "");
+    public GeneratePO(User user, String poID, String prID, String itemID, String itemName, String quantity, String status, boolean isUpdate, boolean fromPOApproval) {
+        this(user, poID, prID, itemID, itemName, quantity, null, status, isUpdate, fromPOApproval, "", "", "", "");
     }
 
     
@@ -386,15 +392,9 @@ public class GeneratePO extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtPurchasedDate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtStatus, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPurchasedDate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtRestockQty, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -405,9 +405,15 @@ public class GeneratePO extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtItemName)
+                                    .addComponent(txtItemName, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
                                     .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPRID, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))))
+                                    .addComponent(txtPRID)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(38, 38, 38))))
         );
         jPanel4Layout.setVerticalGroup(
@@ -447,7 +453,7 @@ public class GeneratePO extends javax.swing.JFrame {
                 .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -472,7 +478,7 @@ public class GeneratePO extends javax.swing.JFrame {
                             .addComponent(txtSupplierName)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -510,7 +516,7 @@ public class GeneratePO extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtDistance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 31, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGeneratePO, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -566,6 +572,7 @@ public class GeneratePO extends javax.swing.JFrame {
             String supplierID = txtSupplierID.getText().trim();
             String suppliedPrice = txtPrice.getText().trim();
             String raisedBy = user.getUserID();
+            String status = txtStatus.getText().trim();
 
             POManager manager = new POManager();
             boolean success;
@@ -592,6 +599,7 @@ public class GeneratePO extends javax.swing.JFrame {
                     poToUpdate.setSupplierID(supplierID);
                     poToUpdate.setSupplierPrice(suppliedPrice);
                     poToUpdate.setRaisedBy(raisedBy);
+                    poToUpdate.setStatus(status);
 
                     // Save updated list to file
                     manager.update(poToUpdate, poList);
@@ -611,7 +619,11 @@ public class GeneratePO extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, isUpdate ? "Purchase Order updated!" : "Purchase Order generated and saved!");
                 this.dispose();
                 if (isUpdate) {
-                    new POApproval((FinanceManager)user).setVisible(true); 
+                    if (fromPOApproval) {
+                        new POApproval(user).setVisible(true);
+                    } else {
+                        new ViewPO(user).setVisible(true); 
+                    }
                 } else {
                     new PRApproval(user).setVisible(true);
                 }
@@ -624,12 +636,14 @@ public class GeneratePO extends javax.swing.JFrame {
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         this.dispose();
         if (isUpdate) {
-            // Open ViewPO screen if update mode
-            new ViewPO(user).setVisible(true);
-        } 
-        else {
+            if (fromPOApproval) {
+                new POApproval(user).setVisible(true);
+            } else {
+                new ViewPO(user).setVisible(true); 
+            }
+        } else {
             new PRApproval(user).setVisible(true);
-        }
+        } 
     }//GEN-LAST:event_btnBack1ActionPerformed
 
     /**

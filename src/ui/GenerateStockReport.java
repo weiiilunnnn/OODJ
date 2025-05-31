@@ -13,6 +13,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import models.Admin;
+import models.InventoryManager;
 import models.User;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -260,10 +262,15 @@ public class GenerateStockReport extends javax.swing.JFrame {
     }//GEN-LAST:event_DownloadBtnActionPerformed
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
-        // TODO add your handling code here:
-        InventoryManagerMenu im = new InventoryManagerMenu(user);
         this.dispose();
-        im.setVisible(true);
+
+        if (user instanceof InventoryManager) {
+            new InventoryManagerMenu((InventoryManager) user).setVisible(true);
+        } else if (user instanceof Admin) {
+            new AdminMenu((Admin) user).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Can't recognize the Character.", "Access Denied", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_BackBtnActionPerformed
 
     /**

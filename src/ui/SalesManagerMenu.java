@@ -75,7 +75,7 @@ public class SalesManagerMenu extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(102, 204, 255));
 
         btnDailySalesEntry.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnDailySalesEntry.setText("DAILY SALES ENTRY");
+        btnDailySalesEntry.setText("DAILY ITEM-WISE SALES ENTRY");
         btnDailySalesEntry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDailySalesEntryActionPerformed(evt);
@@ -254,7 +254,8 @@ public class SalesManagerMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSupplierActionPerformed
 
     private void btnViewPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPOActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new ViewPO((SalesManager) user).setVisible(true);
     }//GEN-LAST:event_btnViewPOActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed

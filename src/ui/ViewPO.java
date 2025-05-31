@@ -17,7 +17,12 @@ import models.PurchaseOrder;
 import models.User;
 import services.POManager;
 import java.util.Map;
+import models.Admin;
+import models.FinanceManager;
+import models.InventoryManager;
+import models.SalesManager;
 import services.FileOperation;
+import ui.SalesManagerMenu;
 
 public class ViewPO extends javax.swing.JFrame {
     private User user;
@@ -32,6 +37,13 @@ public class ViewPO extends javax.swing.JFrame {
         this.user = user;
         initComponents();
         setLocationRelativeTo(null);
+        
+        if (user instanceof SalesManager || user instanceof FinanceManager || user instanceof InventoryManager) {
+            btnUpdatePO.setVisible(false);
+            btnDeletePO.setVisible(false);
+            btnClearForm.setVisible(false);
+            btnCreateNew.setVisible(false);
+        }
         
         txtPOID.setText(poID);
         txtPRID.setText(prID);
@@ -89,7 +101,7 @@ public class ViewPO extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(this, "Failed to parse date: " + ex.getMessage());
                         }
 
-                        txtPRStatus.setText(tablePO.getValueAt(row, 7).toString());
+                        txtStatus.setText(tablePO.getValueAt(row, 7).toString());
                         txtSupplierID.setText(tablePO.getValueAt(row, 8).toString());
                         txtSuppliedPrice.setText(tablePO.getValueAt(row, 9).toString());
                         btnUpdatePO.setEnabled(true);
@@ -162,7 +174,7 @@ public class ViewPO extends javax.swing.JFrame {
         txtItemName.setText("");
         txtRestockQty.setText("");
         txtItemID.setText("");
-        txtPRStatus.setText("");
+        txtStatus.setText("");
         txtPurchaseDate.setDate(null); 
         txtSupplierID.setText("");
         txtSuppliedPrice.setText("");
@@ -180,7 +192,7 @@ public class ViewPO extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         ItemQtyLabel = new javax.swing.JLabel();
         btnCreateNew = new javax.swing.JButton();
-        btnDeleteItem = new javax.swing.JButton();
+        btnDeletePO = new javax.swing.JButton();
         ItemIDLabel = new javax.swing.JLabel();
         ItemNameLabel1 = new javax.swing.JLabel();
         txtItemID = new javax.swing.JTextField();
@@ -189,7 +201,7 @@ public class ViewPO extends javax.swing.JFrame {
         btnClearForm = new javax.swing.JButton();
         txtPurchaseDate = new com.toedter.calendar.JDateChooser();
         ItemPriceLabel2 = new javax.swing.JLabel();
-        txtPRStatus = new javax.swing.JTextField();
+        txtStatus = new javax.swing.JTextField();
         ItemPriceLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablePO = new javax.swing.JTable();
@@ -255,12 +267,12 @@ public class ViewPO extends javax.swing.JFrame {
             }
         });
 
-        btnDeleteItem.setBackground(new java.awt.Color(255, 51, 51));
-        btnDeleteItem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnDeleteItem.setText("Delete");
-        btnDeleteItem.addActionListener(new java.awt.event.ActionListener() {
+        btnDeletePO.setBackground(new java.awt.Color(255, 51, 51));
+        btnDeletePO.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnDeletePO.setText("Delete");
+        btnDeletePO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteItemActionPerformed(evt);
+                btnDeletePOActionPerformed(evt);
             }
         });
 
@@ -297,11 +309,11 @@ public class ViewPO extends javax.swing.JFrame {
         ItemPriceLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         ItemPriceLabel2.setText("Purchase Date:");
 
-        txtPRStatus.setColumns(5);
-        txtPRStatus.setEnabled(false);
-        txtPRStatus.addActionListener(new java.awt.event.ActionListener() {
+        txtStatus.setColumns(5);
+        txtStatus.setEnabled(false);
+        txtStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPRStatusActionPerformed(evt);
+                txtStatusActionPerformed(evt);
             }
         });
 
@@ -392,7 +404,7 @@ public class ViewPO extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnUpdatePO, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(29, 29, 29)
-                                .addComponent(btnDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnDeletePO, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
                                 .addComponent(btnClearForm, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -425,7 +437,7 @@ public class ViewPO extends javax.swing.JFrame {
                                     .addComponent(txtPurchaseDate, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPRStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(FlagStatusLabel))))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -470,7 +482,7 @@ public class ViewPO extends javax.swing.JFrame {
                                     .addComponent(ItemPriceLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtPRStatus)
+                                    .addComponent(txtStatus)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(txtPOID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtItemID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -484,7 +496,7 @@ public class ViewPO extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnUpdatePO, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDeleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDeletePO, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnClearForm, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29))
@@ -517,10 +529,10 @@ public class ViewPO extends javax.swing.JFrame {
 
     private void btnCreateNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateNewActionPerformed
        this.dispose();
-       new PRApproval((PurchaseManager) user).setVisible(true);
+       new PRApproval(user).setVisible(true);
     }//GEN-LAST:event_btnCreateNewActionPerformed
 
-    private void btnDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteItemActionPerformed
+    private void btnDeletePOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePOActionPerformed
         int selectedRow = tablePO.getSelectedRow();
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(this, "Please select a PO item to delete.");
@@ -557,11 +569,25 @@ public class ViewPO extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Deletion cancelled.");
         }
-    }//GEN-LAST:event_btnDeleteItemActionPerformed
+    }//GEN-LAST:event_btnDeletePOActionPerformed
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         this.dispose();
-        new PurchaseManagerMenu(user).setVisible(true);
+
+        if (user instanceof PurchaseManager) {
+            new PurchaseManagerMenu((PurchaseManager) user).setVisible(true);
+        } else if (user instanceof SalesManager) {
+            new SalesManagerMenu((SalesManager) user).setVisible(true);
+        } else if (user instanceof Admin) {
+            new AdminMenu((Admin) user).setVisible(true);
+        } else if (user instanceof FinanceManager) {
+            new FinanceManagerMenu((FinanceManager) user).setVisible(true);
+        } else if (user instanceof InventoryManager) {
+            new InventoryManagerMenu((InventoryManager) user).setVisible(true);
+        } else {
+            // Optional: handle unknown user type
+            JOptionPane.showMessageDialog(null, "Unknown user type. Cannot navigate back.");
+        }
     }//GEN-LAST:event_btnBack1ActionPerformed
 
     private void btnClearFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearFormActionPerformed
@@ -574,8 +600,9 @@ public class ViewPO extends javax.swing.JFrame {
         String itemID = txtItemID.getText();
         String quantity = txtRestockQty.getText();
         String itemName = txtItemName.getText();
+        String status = txtStatus.getText();
 
-        GeneratePO generatePOFrame = new GeneratePO(user, poID, prID, itemID, itemName, quantity, true);
+        GeneratePO generatePOFrame = new GeneratePO(user, poID, prID, itemID, itemName, quantity, status, true, false);
         generatePOFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnUpdatePOActionPerformed
@@ -584,9 +611,9 @@ public class ViewPO extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchActionPerformed
 
-    private void txtPRStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPRStatusActionPerformed
+    private void txtStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPRStatusActionPerformed
+    }//GEN-LAST:event_txtStatusActionPerformed
 
     private void txtRestockQtyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRestockQtyActionPerformed
         // TODO add your handling code here:
@@ -650,7 +677,7 @@ public class ViewPO extends javax.swing.JFrame {
     private javax.swing.JButton btnBack1;
     private javax.swing.JButton btnClearForm;
     private javax.swing.JButton btnCreateNew;
-    private javax.swing.JButton btnDeleteItem;
+    private javax.swing.JButton btnDeletePO;
     private javax.swing.JButton btnUpdatePO;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -662,10 +689,10 @@ public class ViewPO extends javax.swing.JFrame {
     private javax.swing.JTextField txtItemName;
     private javax.swing.JTextField txtPOID;
     private javax.swing.JTextField txtPRID;
-    private javax.swing.JTextField txtPRStatus;
     private com.toedter.calendar.JDateChooser txtPurchaseDate;
     private javax.swing.JTextField txtRestockQty;
     private javax.swing.JTextField txtSearch;
+    private javax.swing.JTextField txtStatus;
     private javax.swing.JTextField txtSuppliedPrice;
     private javax.swing.JTextField txtSupplierID;
     // End of variables declaration//GEN-END:variables

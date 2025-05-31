@@ -634,7 +634,7 @@ public class CreatePR extends javax.swing.JFrame {
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         this.dispose();
-        new ViewPR((SalesManager) user).setVisible(true);
+        new ViewPR(user).setVisible(true);
     }//GEN-LAST:event_btnBack1ActionPerformed
 
     private void txtItemIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtItemIDActionPerformed

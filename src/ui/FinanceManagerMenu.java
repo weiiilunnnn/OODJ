@@ -39,7 +39,7 @@ public class FinanceManagerMenu extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         btnSupplierPayment = new javax.swing.JButton();
         btnGenerateFinancialReport = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnViewPR = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         Patientitle = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
@@ -79,11 +79,11 @@ public class FinanceManagerMenu extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton6.setText("VIEW PURCHASE REQUISITION");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnViewPR.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnViewPR.setText("VIEW PURCHASE REQUISITION");
+        btnViewPR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnViewPRActionPerformed(evt);
             }
         });
 
@@ -105,7 +105,7 @@ public class FinanceManagerMenu extends javax.swing.JFrame {
                             .addComponent(btnGenerateFinancialReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnSupplierPayment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnViewPR, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -120,7 +120,7 @@ public class FinanceManagerMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnGenerateFinancialReport, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnViewPR, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(107, Short.MAX_VALUE))
         );
 
@@ -233,9 +233,10 @@ public class FinanceManagerMenu extends javax.swing.JFrame {
         new GenerateFinancialReport((FinanceManager) user).setVisible(true);
     }//GEN-LAST:event_btnGenerateFinancialReportActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void btnViewPRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPRActionPerformed
+        this.dispose();
+        new ViewPR((FinanceManager) user).setVisible(true);
+    }//GEN-LAST:event_btnViewPRActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to Log Out?", "Log Out", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -254,7 +255,7 @@ public class FinanceManagerMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuit1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String[] options = {"PO Approval", "View Approved PO", "PO Verification"};
+        String[] options = {"View PO", "PO Approval", "PO Verification"};
         int choice = JOptionPane.showOptionDialog(
             this,
             "Which side of PO Management would you like to access?",
@@ -267,12 +268,12 @@ public class FinanceManagerMenu extends javax.swing.JFrame {
         );
 
         if (choice == 0) {
-            POApproval poApprovalPage = new POApproval(user);
-            poApprovalPage.setVisible(true);
+            ViewPO vpo = new ViewPO(user);
+            vpo.setVisible(true);
             this.dispose();
         } else if (choice == 1 ) {
-            ViewApprovedPO vapo = new ViewApprovedPO(user);
-            vapo.setVisible(true);
+            POApproval poApprovalPage = new POApproval(user);
+            poApprovalPage.setVisible(true);
             this.dispose();
         } else if (choice == 2) {
             POVerification poVerificationPage = new POVerification(user);
@@ -329,8 +330,8 @@ public class FinanceManagerMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnNotification;
     private javax.swing.JButton btnQuit1;
     private javax.swing.JButton btnSupplierPayment;
+    private javax.swing.JButton btnViewPR;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

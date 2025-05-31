@@ -28,7 +28,7 @@ SP027,Jorren,0193847383,Jalan Wawasan,30.9
 SP028,Tahlia,0123847392,Jalan Bukit,26.1
 SP029,Uven,0132738492,Jalan Seri,42.6
 SP030,Xevra,0113847391,Jalan Laman,16.4
-SP031,Gisselle,0129836372,Jalan Ching Chong,13.2
+SP031,Gisselle,0129836372,Jalan Ching,13.2
 SP032,Lori,0189383639,Jalan Hantu,66.9
 SP033,Lort,0193739383,Jalan kInta,33.2
 SP034,Candy,01982673827,Jalan Haha,55.1

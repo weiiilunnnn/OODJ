@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import models.User;
 import services.SupplierManager;
 
 /**
@@ -28,6 +29,7 @@ public class SupplierItemList extends javax.swing.JFrame {
     private DefaultTableModel tableModel;
     private TableRowSorter<DefaultTableModel> sorter;
     private SupplierItems supplierItemsRef;
+    private User user;
     
     /**
      * Creates new form SupplierItemList
@@ -38,10 +40,11 @@ public class SupplierItemList extends javax.swing.JFrame {
         initComponents();
         // Any other setup
     }
-    public SupplierItemList(String SupplierID, String SupplierName, JTable savedItemTableFromSupplierGUI, double distance) {
+    public SupplierItemList(String SupplierID, String SupplierName, JTable savedItemTableFromSupplierGUI, double distance, User user) {
         this.SupplierID = SupplierID;
         this.SupplierName = SupplierName;
         this.distance = distance;
+        this.user = user;
         initComponents();
         setLocationRelativeTo(null);
         this.savedItemTable = savedItemTableFromSupplierGUI;
@@ -367,7 +370,7 @@ public class SupplierItemList extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdd2ActionPerformed
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
-        SupplierItems ItemSupply = new SupplierItems(SupplierID, SupplierName, distance);
+        SupplierItems ItemSupply = new SupplierItems(SupplierID, SupplierName, distance, user);
         ItemSupply.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBack1ActionPerformed

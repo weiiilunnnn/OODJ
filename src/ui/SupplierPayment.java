@@ -7,11 +7,16 @@ package ui;
 import java.awt.Color;
 import java.util.List;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import models.Admin;
+import models.FinanceManager;
 import models.Payment;
+import models.PurchaseManager;
 import models.PurchaseOrder;
+import models.SalesManager;
 import models.User;
 import services.ItemManager;
 import services.POManager;
@@ -337,9 +342,16 @@ public class SupplierPayment extends javax.swing.JFrame {
     }//GEN-LAST:event_ViewRecieptBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FinanceManagerMenu FM = new FinanceManagerMenu(user);
         this.dispose();
-        FM.setVisible(true);
+
+        if (user instanceof Admin) {
+            new AdminMenu((Admin) user).setVisible(true);
+        } else if (user instanceof FinanceManager) {
+            new FinanceManagerMenu((FinanceManager) user).setVisible(true);
+        } else {
+            // Optional: handle unknown user type
+            JOptionPane.showMessageDialog(null, "Unknown user type. Cannot navigate back.");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

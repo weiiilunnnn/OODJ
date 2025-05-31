@@ -35,7 +35,7 @@ public class POManager extends MainManager<PurchaseOrder>{
     protected PurchaseOrder parseLine(String line) {
         String[] parts = line.split(",");
         if (parts.length == 11) {
-            return new PurchaseOrder(parts[0], parts[1], parts[2], Integer.parseInt(parts[3]), parts[4], parts[5], parts[6], parts[7], parts[8], Boolean.parseBoolean(parts[9]), Boolean.parseBoolean(parts[10]));
+            return new PurchaseOrder(parts[0], parts[1], parts[2], Integer.parseInt(parts[3]), parts[4], parts[5], parts[6], parts[7], parts[8], Boolean.parseBoolean(parts[9] ), Boolean.parseBoolean(parts[10]));
         }
         return null;
     }

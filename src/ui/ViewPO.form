@@ -53,7 +53,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="btnUpdatePO" min="-2" pref="98" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                                  <Component id="btnDeleteItem" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Component id="btnDeletePO" min="-2" pref="100" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                                   <Component id="btnClearForm" min="-2" pref="101" max="-2" attributes="0"/>
                               </Group>
@@ -94,7 +94,7 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txtPRStatus" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Component id="txtStatus" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                                       <Component id="FlagStatusLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -154,7 +154,7 @@
                                   </Group>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txtPRStatus" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtStatus" alignment="0" max="32767" attributes="0"/>
                                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                           <Component id="txtPOID" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="txtItemID" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -173,7 +173,7 @@
                           <EmptySpace pref="21" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnUpdatePO" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                              <Component id="btnDeleteItem" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="btnDeletePO" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                               <Component id="btnClearForm" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                               <Component id="btnBack1" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                           </Group>
@@ -281,7 +281,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCreateNewActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnDeleteItem">
+        <Component class="javax.swing.JButton" name="btnDeletePO">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="33" red="ff" type="rgb"/>
@@ -292,7 +292,7 @@
             <Property name="text" type="java.lang.String" value="Delete"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteItemActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeletePOActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="ItemIDLabel">
@@ -362,13 +362,13 @@
             <Property name="text" type="java.lang.String" value="Purchase Date:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtPRStatus">
+        <Component class="javax.swing.JTextField" name="txtStatus">
           <Properties>
             <Property name="columns" type="int" value="5"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPRStatusActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtStatusActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="ItemPriceLabel">

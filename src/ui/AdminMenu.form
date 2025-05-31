@@ -29,10 +29,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
+          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -87,7 +84,7 @@
                   <Component id="Patientitle1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="164" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnLogout" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                       <Component id="btnQuit1" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
@@ -117,14 +114,15 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="btnUserRegistration2" min="-2" pref="218" max="-2" attributes="0"/>
+                                  <Component id="btnItemEntry" min="-2" pref="218" max="-2" attributes="0"/>
                                   <Component id="btnUserRegistration" min="-2" pref="218" max="-2" attributes="0"/>
-                                  <Component id="btnUserRegistration1" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
-                                  <Component id="btnUserRegistration3" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
-                                  <Component id="btnUserRegistration4" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
-                                  <Component id="btnUserRegistration5" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
-                                  <Component id="btnUserRegistration6" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
-                                  <Component id="btnUserRegistration7" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
+                                  <Component id="btnSupplier" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
+                                  <Component id="btnPR" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
+                                  <Component id="btnPO" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
+                                  <Component id="btnPayment" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
+                                  <Component id="btnManageStock" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
+                                  <Component id="btnGenerateReport" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
+                                  <Component id="btnDailySalesEntry" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -140,20 +138,22 @@
                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                       <Component id="btnUserRegistration" min="-2" pref="46" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnUserRegistration2" min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="btnItemEntry" min="-2" pref="46" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnUserRegistration1" min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="btnSupplier" min="-2" pref="46" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnUserRegistration3" min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="btnDailySalesEntry" min="-2" pref="45" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      <Component id="btnPR" min="-2" pref="46" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnUserRegistration4" min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="btnPO" min="-2" pref="46" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnUserRegistration5" min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="btnPayment" min="-2" pref="46" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnUserRegistration6" min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="btnManageStock" min="-2" pref="46" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnUserRegistration7" min="-2" pref="46" max="-2" attributes="0"/>
-                      <EmptySpace pref="51" max="32767" attributes="0"/>
+                      <Component id="btnGenerateReport" min="-2" pref="46" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -178,7 +178,7 @@
                 <Property name="text" type="java.lang.String" value="jLabel3"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btnUserRegistration1">
+            <Component class="javax.swing.JButton" name="btnSupplier">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -186,10 +186,10 @@
                 <Property name="text" type="java.lang.String" value="SUPPLIER ENTRY"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUserRegistration1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSupplierActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnUserRegistration2">
+            <Component class="javax.swing.JButton" name="btnItemEntry">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -197,10 +197,10 @@
                 <Property name="text" type="java.lang.String" value="ITEM ENTRY"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUserRegistration2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnItemEntryActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnUserRegistration3">
+            <Component class="javax.swing.JButton" name="btnPR">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -208,10 +208,10 @@
                 <Property name="text" type="java.lang.String" value="PURCHASE REQUISITION"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUserRegistration3ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPRActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnUserRegistration4">
+            <Component class="javax.swing.JButton" name="btnPO">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -219,10 +219,10 @@
                 <Property name="text" type="java.lang.String" value="PURCHASE ORDER"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUserRegistration4ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPOActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnUserRegistration5">
+            <Component class="javax.swing.JButton" name="btnPayment">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -230,10 +230,10 @@
                 <Property name="text" type="java.lang.String" value="PAYMENT"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUserRegistration5ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPaymentActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnUserRegistration6">
+            <Component class="javax.swing.JButton" name="btnManageStock">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -241,10 +241,10 @@
                 <Property name="text" type="java.lang.String" value="MANAGE STOCK"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUserRegistration6ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageStockActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnUserRegistration7">
+            <Component class="javax.swing.JButton" name="btnGenerateReport">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -252,7 +252,18 @@
                 <Property name="text" type="java.lang.String" value="GENERATE REPORT"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUserRegistration7ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGenerateReportActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnDailySalesEntry">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="DAILY ITEM-WISE SALES ENTRY"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDailySalesEntryActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
