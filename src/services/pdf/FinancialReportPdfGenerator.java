@@ -17,7 +17,6 @@ import services.FinancialReportGenerator.ItemSummary;
 import javax.swing.*;
 import java.io.FileOutputStream;
 import java.time.Month;
-import java.util.List;
 import java.util.Map;
 
 public class FinancialReportPdfGenerator {

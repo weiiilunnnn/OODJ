@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.PurchaseRequisition;
-import models.PurchaseManager;
 import models.User;
 import services.FileOperation;
 import services.IDGenerator;

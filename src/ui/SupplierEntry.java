@@ -17,6 +17,7 @@ import models.Supplier;
 import models.User;
 import services.IDGenerator;
 import services.SupplierManager;
+import services.ValidateInputs;
 
 /**
  *
@@ -47,10 +48,11 @@ public class SupplierEntry extends javax.swing.JFrame {
         supplierList = sm.load();   
         tableModel = sm.getSupplierTableModel();  
         tblSupplier.setModel(tableModel);     
+        String SupplierID = IDGenerator.generateNextID("SP", "Supplier.txt");
+        txtSupplierID.setText(SupplierID);
+        
         sorter = new TableRowSorter<>(tableModel);  
         tblSupplier.setRowSorter(sorter);
-        String itemID = IDGenerator.generateNextID("SP", "Supplier.txt");
-        txtSupplierID.setText(itemID);
 
 
         sorter.setComparator(2, (o1, o2) -> {
@@ -107,25 +109,14 @@ public class SupplierEntry extends javax.swing.JFrame {
         }
     }
 
-
-    
-    private boolean validateInputs(){
-        if (txtSupplierName.getText().trim().isEmpty() || txtContactNumber.getText().trim().isEmpty() || txtSupplierAddress.getText().trim().isEmpty() || txtDistance.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Insufficient Credentials. Supplier Entry Declined.");
-            return false;
-        }
-        
-        if (txtContactNumber.getText().trim().matches(".*[a-zA-Z]+.*")){
-            JOptionPane.showMessageDialog(null, "Invalid Contact Number. Letters are not allowed.");
-            return false;
-        }
-        
-        if (txtDistance.getText().trim().matches(".*[a-zA-Z]+.*")){
-            JOptionPane.showMessageDialog(null, "Invalid Distance. Letters are not allowed.");
-            return false;
-        }
-        return true;
-    }
+    private boolean validateInputs() {
+        return ValidateInputs.validateSupplierFields(
+            txtSupplierName.getText(),
+            txtContactNumber.getText(),
+            txtSupplierAddress.getText(),
+            txtDistance.getText()
+        );
+}
     
     private void refreshTable() {
         supplierList = sm.load();
@@ -154,7 +145,6 @@ public class SupplierEntry extends javax.swing.JFrame {
         txtSupplierID = new javax.swing.JTextField();
         btnItemSupply = new javax.swing.JButton();
         txtSupplierName = new javax.swing.JTextField();
-        txtContactNumber = new javax.swing.JTextField();
         txtSupplierAddress = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
@@ -171,6 +161,7 @@ public class SupplierEntry extends javax.swing.JFrame {
         btnCancel = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtDistance = new javax.swing.JTextField();
+        txtContactNumber = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -229,12 +220,6 @@ public class SupplierEntry extends javax.swing.JFrame {
         txtSupplierName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSupplierNameActionPerformed(evt);
-            }
-        });
-
-        txtContactNumber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtContactNumberActionPerformed(evt);
             }
         });
 
@@ -337,6 +322,17 @@ public class SupplierEntry extends javax.swing.JFrame {
             }
         });
 
+        try {
+            txtContactNumber.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-#######")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtContactNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtContactNumberActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -355,16 +351,14 @@ public class SupplierEntry extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(txtContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
+                            .addComponent(txtContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtSupplierAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel7)
                             .addComponent(txtDistance, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -409,7 +403,7 @@ public class SupplierEntry extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtSupplierID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtContactNumber))
+                        .addComponent(txtContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtSupplierAddress)
                     .addComponent(txtDistance))
                 .addGap(27, 27, 27)
@@ -456,10 +450,6 @@ public class SupplierEntry extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSupplierNameActionPerformed
 
-    private void txtContactNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContactNumberActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtContactNumberActionPerformed
-
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         if (!validateInputs()){
             return;
@@ -477,6 +467,8 @@ public class SupplierEntry extends javax.swing.JFrame {
         });
         JOptionPane.showMessageDialog(null, "Supplier added successfully.");
         clearFields();
+        String SupplierID = IDGenerator.generateNextID("SP", "Supplier.txt");
+        txtSupplierID.setText(SupplierID);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -486,23 +478,44 @@ public class SupplierEntry extends javax.swing.JFrame {
             return;
         }
 
-        String itemId = tblSupplier.getValueAt(selectedRow, 0).toString();
-        String itemName = tblSupplier.getValueAt(selectedRow, 1).toString();
+        String supplierId = tblSupplier.getValueAt(selectedRow, 0).toString();
+        String supplierName = tblSupplier.getValueAt(selectedRow, 1).toString();
 
-        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete item \""
-            + itemName + "\" (ID: " + itemId + ")?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+        int confirm = JOptionPane.showConfirmDialog(this,
+            "Are you sure you want to delete supplier \"" + supplierName + "\" (ID: " + supplierId + ")?",
+            "Confirm Deletion", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            sm.delete(itemId, supplierList);
-            tblSupplier.setModel(sm.getSupplierTableModel());
+            // Call delete method in your manager, modify supplierList accordingly
+            sm.delete(supplierId, supplierList);
+
+            // Clear selection before updating the model
+            tblSupplier.clearSelection();
+
+            // Get the updated model from your manager
+            DefaultTableModel model = sm.getSupplierTableModel();
+
+            // Set the model to the table
+            tblSupplier.setModel(model);
+
+            // Optional: set row sorter if you want sorting
+            TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+            tblSupplier.setRowSorter(sorter);
+
+            // Example: if you have numeric columns to sort, set comparator
+            // sorter.setComparator(columnIndex, comparator);
+
             JOptionPane.showMessageDialog(this, "Supplier deleted successfully.");
 
-            //btnAddItem.setEnabled(true);
+            // Clear input fields on your form
             clearFields();
-            tblSupplier.clearSelection();
+
         } else {
             JOptionPane.showMessageDialog(this, "Deletion cancelled.");
         }
+        
+        String SupplierID = IDGenerator.generateNextID("SP", "Supplier.txt");
+        txtSupplierID.setText(SupplierID);
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
@@ -533,6 +546,8 @@ public class SupplierEntry extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Update cancelled.");
         }
         refreshTable();
+        String SupplierID = IDGenerator.generateNextID("SP", "Supplier.txt");
+        txtSupplierID.setText(SupplierID);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
@@ -552,11 +567,17 @@ public class SupplierEntry extends javax.swing.JFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         clearFields();
+        String SupplierID = IDGenerator.generateNextID("SP", "Supplier.txt");
+        txtSupplierID.setText(SupplierID);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void txtDistanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDistanceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDistanceActionPerformed
+
+    private void txtContactNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContactNumberActionPerformed
+
+    }//GEN-LAST:event_txtContactNumberActionPerformed
 
     /**
      * @param args the command line arguments
@@ -612,7 +633,7 @@ public class SupplierEntry extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblSupplier;
-    private javax.swing.JTextField txtContactNumber;
+    private javax.swing.JFormattedTextField txtContactNumber;
     private javax.swing.JTextField txtDistance;
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtSupplierAddress;

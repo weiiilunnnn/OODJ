@@ -20,6 +20,7 @@ import models.SalesManager;
 import models.User;
 import services.FileOperation;
 import services.PRManager;
+import services.ValidateInputs;
 
 /**
  *
@@ -109,32 +110,11 @@ public class ViewPR extends javax.swing.JFrame {
 
     /** Validates user inputs before add/update */
     private boolean validateInputs() {
-        // Validate Restock Quantity
-        try {
-            int restockQty = Integer.parseInt(txtRestockQty.getText().trim());
-            if (restockQty <= 0) {
-                JOptionPane.showMessageDialog(this, "Restock quantity must be more than 0.", "Input Error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Restock quantity must be a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        // Validate Required Date
-        if (txtRequiredDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Please select a required date.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        // Optional: Prevent selecting a past date
-        Date today = new Date();
-        if (txtRequiredDate.getDate().before(today)) {
-            JOptionPane.showMessageDialog(this, "Required date cannot be in the past.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        return true;
+        return ValidateInputs.validatePRFields(
+            txtRestockQty.getText(),
+            txtRequiredDate.getDate(),
+            this
+        );
     }
 
     /** Filters the table rows using the sorter instead of replacing the model */

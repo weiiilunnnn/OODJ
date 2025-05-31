@@ -8,8 +8,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import models.PurchaseOrder;
 import models.User;
 import services.POManager;
+import services.ValidateInputs;
 
 /**
  *
@@ -106,7 +105,6 @@ public class GeneratePO extends javax.swing.JFrame {
 
         Map<String, String[]> supplierMap = new HashMap<>();
 
-        // ✅ Read Supplier.txt correctly
         try (BufferedReader br = new BufferedReader(new FileReader("Supplier.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -147,44 +145,13 @@ public class GeneratePO extends javax.swing.JFrame {
     }
     
     private boolean validatePOInputs() {
-        if (txtSupplierID.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please select a supplier.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        if (txtRestockQty.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter the restock quantity.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        try {
-            int quantity = Integer.parseInt(txtRestockQty.getText().trim());
-            if (quantity <= 0) {
-                JOptionPane.showMessageDialog(this, "Quantity must be greater than 0.", "Input Error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid numeric quantity.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        if (txtPurchasedDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Please select a required date.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        // Strip time for fair date comparison
-        LocalDate today = LocalDate.now();
-        LocalDate selectedDate = txtPurchasedDate.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        if (!selectedDate.isAfter(today)) {
-            JOptionPane.showMessageDialog(this, "Required date must be after today.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        return true;
+        return ValidateInputs.validatePOFields(
+            txtSupplierID.getText(),
+            txtRestockQty.getText(),
+            txtPurchasedDate.getDate(),
+            this
+        );
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.

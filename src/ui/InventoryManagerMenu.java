@@ -7,7 +7,6 @@ package ui;
 import javax.swing.JOptionPane;
 import login.LoginGUI;
 import models.InventoryManager;
-import models.SalesManager;
 import models.User;
 
 /**

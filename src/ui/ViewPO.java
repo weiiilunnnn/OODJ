@@ -22,7 +22,9 @@ import models.FinanceManager;
 import models.InventoryManager;
 import models.SalesManager;
 import services.FileOperation;
-import ui.SalesManagerMenu;
+import services.ValidateInputs;
+
+
 
 public class ViewPO extends javax.swing.JFrame {
     private User user;
@@ -141,22 +143,12 @@ public class ViewPO extends javax.swing.JFrame {
 
     /** Validates user inputs before add/update */
     private boolean validateInputs() {
-        // Validate Required Date
-        if (txtPurchaseDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Please select a required date.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        // Optional: Prevent selecting a past date
-        Date today = new Date();
-        if (txtPurchaseDate.getDate().before(today)) {
-            JOptionPane.showMessageDialog(this, "Required date cannot be in the past.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        return true;
+        return ValidateInputs.validateTodayOrFutureDate(
+            txtPurchaseDate.getDate(),
+            this,
+            "Required Date"
+        );
     }
-
 
     /** Filters the table rows using the sorter instead of replacing the model */
     private void filterItems(String keyword) {

@@ -314,6 +314,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtItemName">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtItemNameActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnDeleteItem">
           <Properties>

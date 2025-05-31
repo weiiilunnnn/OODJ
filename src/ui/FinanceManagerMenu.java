@@ -18,6 +18,7 @@ public class FinanceManagerMenu extends javax.swing.JFrame {
 
     /**
      * Creates new form FinancialManagerMenu
+     * @param user
      */
     public FinanceManagerMenu(User user) {
         this.user = user;

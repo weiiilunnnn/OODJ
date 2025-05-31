@@ -14,9 +14,6 @@ package services.pdf;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import java.io.FileOutputStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.awt.Desktop;
 import java.io.File;
 
 public abstract class PdfGenerator {

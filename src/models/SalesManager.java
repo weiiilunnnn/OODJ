@@ -4,7 +4,6 @@
  */
 package models;
 
-import java.awt.List;
 import ui.SalesManagerMenu;
 
 /**

@@ -117,7 +117,7 @@ public class ProcessSupplierPayment extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         AccountNumber = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        EncryptedPassword = new javax.swing.JTextField();
+        EncryptedPassword = new javax.swing.JPasswordField();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -235,12 +235,6 @@ public class ProcessSupplierPayment extends javax.swing.JFrame {
 
         jLabel14.setText("Encrypted Password:");
 
-        EncryptedPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EncryptedPasswordActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -248,19 +242,17 @@ public class ProcessSupplierPayment extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
-                            .addComponent(jLabel13))
-                        .addGap(43, 43, 43)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(AccountName, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(AccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel1)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addGap(18, 18, 18)
-                        .addComponent(EncryptedPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel14))
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(AccountName, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                            .addComponent(AccountNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                            .addComponent(EncryptedPassword))))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -280,7 +272,7 @@ public class ProcessSupplierPayment extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(EncryptedPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(220, 237, 253));
@@ -635,10 +627,6 @@ public class ProcessSupplierPayment extends javax.swing.JFrame {
 
     }//GEN-LAST:event_AccountNumberActionPerformed
 
-    private void EncryptedPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EncryptedPasswordActionPerformed
-
-    }//GEN-LAST:event_EncryptedPasswordActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -678,7 +666,7 @@ public class ProcessSupplierPayment extends javax.swing.JFrame {
     private javax.swing.JTextField AccountName;
     private javax.swing.JTextField AccountNumber;
     private javax.swing.JButton CancelButton;
-    private javax.swing.JTextField EncryptedPassword;
+    private javax.swing.JPasswordField EncryptedPassword;
     private javax.swing.JButton PayButton;
     private javax.swing.JLabel StockReport2;
     private javax.swing.JLabel jLabel1;

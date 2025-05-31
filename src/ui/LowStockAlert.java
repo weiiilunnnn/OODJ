@@ -4,19 +4,15 @@
  */
 package ui;
 
-import java.awt.Color;
 import java.util.List;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import models.InventoryManager;
 import models.Item;
 import models.User;
 import services.FileOperation;
-import services.ValidateInputs;
-import ui.InventoryManagerMenu;
 
 /**
  *

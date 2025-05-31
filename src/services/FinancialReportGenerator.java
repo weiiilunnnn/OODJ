@@ -23,13 +23,13 @@ public class FinancialReportGenerator {
     private final PaymentManager paymentManager;
     private final POManager poManager;
     private final ItemManager itemManager;
-    private final SupplierManager supplierManager; // ✅ New
+    private final SupplierManager supplierManager; 
 
     public FinancialReportGenerator() {
         this.paymentManager = new PaymentManager();
         this.poManager = new POManager();
         this.itemManager = new ItemManager();
-        this.supplierManager = new SupplierManager(); // ✅ New
+        this.supplierManager = new SupplierManager(); 
     }
 
     public Map<String, ItemSummary> generateReportData(int selectedMonth, int selectedYear) {
@@ -58,7 +58,7 @@ public class FinancialReportGenerator {
                     int quantity = po.getQuantity();
                     String supplierID = po.getSupplierID();
 
-                    double price = supplierManager.getItemPrice(supplierID, itemID); // ✅ Use supplier price
+                    double price = supplierManager.getItemPrice(supplierID, itemID); 
                     double totalCost = quantity * price;
 
                     ItemSummary summary = summaryMap.getOrDefault(itemID,

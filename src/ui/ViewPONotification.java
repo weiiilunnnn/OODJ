@@ -76,32 +76,33 @@ public class ViewPONotification extends javax.swing.JDialog {
             }
         });
     }
-private void handleRowClick(int row) {
-    int modelRow = tblPONotifications.convertRowIndexToModel(row);
-    String status = tableModel.getValueAt(modelRow, 3).toString().trim();
+    
+    private void handleRowClick(int row) {
+        int modelRow = tblPONotifications.convertRowIndexToModel(row);
+        String status = tableModel.getValueAt(modelRow, 3).toString().trim();
 
-    if (status.equalsIgnoreCase("Pending")) {
-        int confirm = JOptionPane.showConfirmDialog(
-            this,
-            "Do you want to proceed with approving this Purchase Order?",
-            "Confirm Approval",
-            JOptionPane.YES_NO_OPTION
-        );
+        if (status.equalsIgnoreCase("Pending")) {
+            int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Do you want to proceed with approving this Purchase Order?",
+                "Confirm Approval",
+                JOptionPane.YES_NO_OPTION
+            );
 
-        if (confirm == JOptionPane.YES_OPTION) {
-            new POApproval(user).setVisible(true);
-            salesManagerFrame.dispose();
-            this.dispose(); 
+            if (confirm == JOptionPane.YES_OPTION) {
+                new POApproval(user).setVisible(true);
+                salesManagerFrame.dispose();
+                this.dispose(); 
+            }
+
+        } else if (status.equalsIgnoreCase("Approved")) {
+            JOptionPane.showMessageDialog(this, "The Purchase Order has been Approved.");
+        } else if (status.equalsIgnoreCase("Rejected")) {
+            JOptionPane.showMessageDialog(this, "The Purchase Order has been Rejected.");                            
+        } else {
+            JOptionPane.showMessageDialog(this, "Unknown status: " + status);
         }
-
-    } else if (status.equalsIgnoreCase("Approved")) {
-        JOptionPane.showMessageDialog(this, "The Purchase Order has been Approved.");
-    } else if (status.equalsIgnoreCase("Rejected")) {
-        JOptionPane.showMessageDialog(this, "The Purchase Order has been Rejected.");                            
-    } else {
-        JOptionPane.showMessageDialog(this, "Unknown status: " + status);
     }
-}
 
     
 

@@ -12,7 +12,6 @@ package services;
 
 import java.util.List;
 import models.Payment;
-import models.Supplier;
 
 public class PaymentManager extends MainManager<Payment> {
 

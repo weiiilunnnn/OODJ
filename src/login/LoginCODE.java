@@ -69,14 +69,14 @@ public class LoginCODE {
                     String storedPassword = parts[2];
                     String storedRole = parts[3];
                     if (storedID.equals(userID) && storedPassword.equals(password) && storedRole.equals(role)) {
-                        return true; // Match found
+                        return true;
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false; // No match found
+        return false;
     }
 
     // Load the user details based on the provided user ID, password, and role

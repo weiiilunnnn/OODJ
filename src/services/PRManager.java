@@ -63,13 +63,13 @@ public class PRManager extends MainManager<PurchaseRequisition>{
         return MainManager.getTableModel(prList, columns, pr -> {
             String itemName = itemMap.getOrDefault(pr.getItemID(), "Unknown Item");
             return new Object[]{
-                pr.getPrID(),            // PR ID
-                pr.getItemID(),          // Item ID
-                itemName,                // Item Name
-                pr.getQuantity(),        // Restock Qty
-                pr.getRaisedBy(),        // PR Raised By
-                pr.getDate(),            // Required Date
-                pr.getStatus()           // Status
+                pr.getPrID(),
+                pr.getItemID(),
+                itemName,
+                pr.getQuantity(),
+                pr.getRaisedBy(),      
+                pr.getDate(),         
+                pr.getStatus()     
             };
         });
     }

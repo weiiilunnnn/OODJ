@@ -15,7 +15,6 @@ public class RecieptReportGenerator {
     private Item item;
     private Supplier supplier;
     private Payment payment;
-    private String userName;
     private PurchaseOrder po;
     private SupplierManager supplierManager;
     

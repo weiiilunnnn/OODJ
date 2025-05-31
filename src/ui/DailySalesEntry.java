@@ -9,19 +9,15 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import models.Admin;
-import models.FinanceManager;
 import models.Item;
-import models.PurchaseManager;
 import models.SalesManager;
 import models.User;
-import services.FileOperation;
 import services.ItemManager;
 
 /**
@@ -31,7 +27,6 @@ import services.ItemManager;
 public class DailySalesEntry extends javax.swing.JFrame {
     private User user;
     private ItemManager itemManager = new ItemManager();
-    private int Total;
     private String originalItemId = "";
     private String originalItemName = "";
     private String originalSalesQty = "";
@@ -245,12 +240,7 @@ public class DailySalesEntry extends javax.swing.JFrame {
             SubmitButton.setBackground(Color.GRAY);
         }
     }
-
-
-    //-------------------
     
-
-        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

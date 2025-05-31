@@ -18,6 +18,7 @@ import models.SalesManager;
 import services.FileOperation;
 import services.IDGenerator;
 import services.ItemManager;
+import services.ValidateInputs;
 
 /**
  *
@@ -106,52 +107,14 @@ public class ItemEntry extends javax.swing.JFrame {
         return capitalized.toString().trim();
     }
 
-    /** Validates user inputs before add/update */
     private boolean validateInputs() {
-        String itemName = txtItemName.getText().trim();
-        if (itemName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Item name cannot be empty.");
-            return false;
-        }
-        if (!itemName.matches(".*[a-zA-Z].*")) {
-            JOptionPane.showMessageDialog(this, "Item name must contain at least one letter.");
-            return false;
-        }
-        if (itemName.length() < 3) {
-            JOptionPane.showMessageDialog(this, "Item name must be at least 3 characters long.");
-            return false;
-        }
-        try {
-            int qty = Integer.parseInt(txtItemQty.getText().trim());
-            if (qty < 0) {
-                JOptionPane.showMessageDialog(this, "Quantity must be 0 or more.");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Quantity must be an integer.");
-            return false;
-        }
-        try {
-            double price = Double.parseDouble(txtItemPrice.getText().trim());
-            if (price < 0) {
-                JOptionPane.showMessageDialog(this, "Price must be 0 or more.");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Price must be a number.");
-            return false;
-        }
-        try {
-            int rol = Integer.parseInt(txtReorderLevel.getText().trim());
-            if (rol < 0) {
-                JOptionPane.showMessageDialog(this, "Reorder Level must be 0 or more.");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Reorder Level must be an integer.");
-            return false;
-        }
-        return true;
+        return ValidateInputs.validateItemFields(
+            txtItemName.getText(),
+            txtItemQty.getText(),
+            txtItemPrice.getText(),
+            txtReorderLevel.getText(),
+            this // <== Pass the current UI component
+        );
     }
 
     /** Filters the table rows using the sorter instead of replacing the model */
@@ -283,6 +246,12 @@ public class ItemEntry extends javax.swing.JFrame {
         btnUpdateItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpdateItemActionPerformed(evt);
+            }
+        });
+
+        txtItemName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtItemNameActionPerformed(evt);
             }
         });
 
@@ -593,6 +562,10 @@ public class ItemEntry extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Unknown user type. Cannot navigate back.");
         }
     }//GEN-LAST:event_btnBack1ActionPerformed
+
+    private void txtItemNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtItemNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtItemNameActionPerformed
 
     /**
      * @param args the command line arguments

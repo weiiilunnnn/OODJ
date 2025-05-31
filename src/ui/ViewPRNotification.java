@@ -71,32 +71,32 @@ public class ViewPRNotification extends javax.swing.JDialog {
         });
     }
     
-private void handleRowClick(int row) {
-    int modelRow = tblNotifications.convertRowIndexToModel(row);
-    String status = tableModel.getValueAt(modelRow, 3).toString().trim(); 
+    private void handleRowClick(int row) {
+        int modelRow = tblNotifications.convertRowIndexToModel(row);
+        String status = tableModel.getValueAt(modelRow, 3).toString().trim(); 
 
-    if (status.equalsIgnoreCase("Pending")) {
-        int confirm = JOptionPane.showConfirmDialog(
-            this,
-            "Do you want to proceed with approving this Purchase Requisition?",
-            "Confirm Approval",
-            JOptionPane.YES_NO_OPTION
-        );
+        if (status.equalsIgnoreCase("Pending")) {
+            int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Do you want to proceed with approving this Purchase Requisition?",
+                "Confirm Approval",
+                JOptionPane.YES_NO_OPTION
+            );
 
-        if (confirm == JOptionPane.YES_OPTION) {
-            new PRApproval(user).setVisible(true);
-            purchaseManagerFrame.dispose();
-            this.dispose(); 
+            if (confirm == JOptionPane.YES_OPTION) {
+                new PRApproval(user).setVisible(true);
+                purchaseManagerFrame.dispose();
+                this.dispose(); 
+            }
+
+        } else if (status.equalsIgnoreCase("Approved")) {
+            JOptionPane.showMessageDialog(this, "The Purchase Requisition has been Approved.");
+        } else if (status.equalsIgnoreCase("Rejected")) {
+            JOptionPane.showMessageDialog(this, "The Purchase Requisition has been Rejected.");                            
+        } else {
+            JOptionPane.showMessageDialog(this, "Unknown status: " + status);
         }
-
-    } else if (status.equalsIgnoreCase("Approved")) {
-        JOptionPane.showMessageDialog(this, "The Purchase Requisition has been Approved.");
-    } else if (status.equalsIgnoreCase("Rejected")) {
-        JOptionPane.showMessageDialog(this, "The Purchase Requisition has been Rejected.");                            
-    } else {
-        JOptionPane.showMessageDialog(this, "Unknown status: " + status);
     }
-}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

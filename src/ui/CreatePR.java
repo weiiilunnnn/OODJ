@@ -13,11 +13,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import models.PurchaseRequisition;
-import models.SalesManager;
 import models.User;
 import services.FileOperation;
 import services.IDGenerator;
 import services.ItemManager;
+import services.ValidateInputs;
 
 /**
  *
@@ -57,7 +57,6 @@ public class CreatePR extends javax.swing.JFrame {
         ItemManager itemManager = new ItemManager();
         DefaultTableModel fullModel = itemManager.getItemTableModel();  // Load all items
 
-        // Step 1: Get item IDs already in PR file
         Set<String> itemIDsInPR = new HashSet<>();
         List<String> prLines = FileOperation.ReadFileAsList(PurchaseRequisition.class);
         for (String line : prLines) {
@@ -66,8 +65,7 @@ public class CreatePR extends javax.swing.JFrame {
                 itemIDsInPR.add(parts[1]); // assuming Item ID is the second column
             }
         }
-
-        // Step 2: Find the index of the "Flag" column
+        
         int flagColIndex = -1;
         for (int i = 0; i < fullModel.getColumnCount(); i++) {
             if (fullModel.getColumnName(i).equalsIgnoreCase("Flag")) {
@@ -81,13 +79,11 @@ public class CreatePR extends javax.swing.JFrame {
             return;
         }
 
-        // Step 3: Create a filtered model
         DefaultTableModel filteredModel = new DefaultTableModel();
         for (int i = 0; i < fullModel.getColumnCount(); i++) {
             filteredModel.addColumn(fullModel.getColumnName(i));
         }
 
-        // Step 4: Add rows with Flag = "Restock" and not in PR file
         for (int row = 0; row < fullModel.getRowCount(); row++) {
             Object flagValue = fullModel.getValueAt(row, flagColIndex);
             String itemID = fullModel.getValueAt(row, 0).toString(); // assuming Item ID is in column 0
@@ -102,14 +98,12 @@ public class CreatePR extends javax.swing.JFrame {
             }
         }
 
-        // Step 5: Set model and hide Flag column
         tableItemList.setModel(filteredModel);
         TableColumnModel columnModel = tableItemList.getColumnModel();
         if (flagColIndex >= 0 && flagColIndex < columnModel.getColumnCount()) {
             columnModel.removeColumn(columnModel.getColumn(flagColIndex));
         }
 
-        // Adjust column widths
         for (int i = 0; i < columnModel.getColumnCount(); i++) {
             String columnName = columnModel.getColumn(i).getHeaderValue().toString();
             if (columnName.equalsIgnoreCase("Name")) {
@@ -133,32 +127,11 @@ public class CreatePR extends javax.swing.JFrame {
     }
     
     private boolean validateInputs() {
-        // Validate Restock Quantity
-        try {
-            int restockQty = Integer.parseInt(txtRestockQty.getText().trim());
-            if (restockQty <= 0) {
-                JOptionPane.showMessageDialog(this, "Restock quantity must be more than 0.", "Input Error", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Restock quantity must be a valid integer.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        // Validate Required Date
-        if (txtRequiredDate.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Please select a required date.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        // Optional: Prevent selecting a past date
-        Date today = new Date();
-        if (txtRequiredDate.getDate().before(today)) {
-            JOptionPane.showMessageDialog(this, "Required date cannot be in the past.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        return true;
+        return ValidateInputs.validatePRFields(
+            txtRestockQty.getText(),
+            txtRequiredDate.getDate(),
+            this  // 'this' refers to the parent component for JOptionPane
+        );
     }
 
     private void setEmpty() {

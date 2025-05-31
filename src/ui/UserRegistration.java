@@ -112,16 +112,26 @@ public class UserRegistration extends javax.swing.JFrame {
     }
     
     private boolean validateUserFields() {
+        String email = txtEmail.getText().trim();
+
         if (txtUserID.getText().trim().isEmpty() ||
             txtName.getText().trim().isEmpty() ||
             txtPassword.getText().trim().isEmpty() ||
             txtContactNumber.getText().trim().isEmpty() ||
-            txtEmail.getText().trim().isEmpty() ||
+            email.isEmpty() ||
             boxRole.getSelectedItem() == null) {
 
             JOptionPane.showMessageDialog(this, "Please fill in all the fields before proceeding.");
             return false;
         }
+
+        // Email validation directly here
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        if (!email.matches(emailRegex)) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid email address.");
+            return false;
+        }
+
         return true;
     }
     
@@ -158,9 +168,9 @@ public class UserRegistration extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        txtContactNumber = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
+        txtContactNumber = new javax.swing.JFormattedTextField();
         btnBack = new javax.swing.JButton();
 
         Backbutton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -289,18 +299,23 @@ public class UserRegistration extends javax.swing.JFrame {
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel20.setText("Contact Number");
 
-        txtContactNumber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtContactNumberActionPerformed(evt);
-            }
-        });
-
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel21.setText("Email");
 
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);
+            }
+        });
+
+        try {
+            txtContactNumber.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-#######")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtContactNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtContactNumberActionPerformed(evt);
             }
         });
 
@@ -326,8 +341,8 @@ public class UserRegistration extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel19)
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(txtContactNumber)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                    .addComponent(txtContactNumber))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -658,10 +673,6 @@ public class UserRegistration extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordActionPerformed
 
-    private void txtContactNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContactNumberActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtContactNumberActionPerformed
-
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
@@ -701,6 +712,10 @@ public class UserRegistration extends javax.swing.JFrame {
         txtUserID.setText(newUserID);  // Set the new User ID
         txtUserID.setEditable(false);
     }//GEN-LAST:event_boxRoleActionPerformed
+
+    private void txtContactNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContactNumberActionPerformed
+
+    }//GEN-LAST:event_txtContactNumberActionPerformed
     
     
     /**
@@ -762,7 +777,7 @@ public class UserRegistration extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField txtContactNumber;
+    private javax.swing.JFormattedTextField txtContactNumber;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPassword;
