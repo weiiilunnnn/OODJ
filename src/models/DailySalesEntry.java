@@ -8,8 +8,8 @@ package models;
  *
  * @author lunwe
  */
-public class DailySalesEntry {
-    private String itemCode;
-    private int quantitySold;
-    private String date;
-}
+//public class DailySalesEntry {
+//    private String itemCode;
+//    private int quantitySold;
+//    private String date;
+//}

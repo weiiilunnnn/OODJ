@@ -161,7 +161,7 @@ public class POManager extends MainManager<PurchaseOrder>{
         return updated;
     }
     
-    public static void updateLine(String fileName, String matchValue, int matchColumn, int updateColumn, String newValue) {
+    public void updateLine(String fileName, String matchValue, int matchColumn, int updateColumn, String newValue) {
         File inputFile = new File(fileName);
         File tempFile = new File("temp_" + fileName);
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -185,7 +185,7 @@ public class POManager extends MainManager<PurchaseOrder>{
         tempFile.renameTo(inputFile);
     }
     
-    public static void appendLine(String fileName, String line) {
+    public void appendLine(String fileName, String line) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
             writer.write(line);
             writer.newLine();
@@ -195,7 +195,7 @@ public class POManager extends MainManager<PurchaseOrder>{
     }
     
     /** Remove a requisition from the file by PR ID */
-    public static void deleteRequisitionById(String prID) {
+    public void deleteRequisitionById(String prID) {
         File inputFile = new File("PurchaseRequisition.txt");
         File tempFile = new File("temp_requisition.txt");
 

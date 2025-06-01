@@ -55,6 +55,9 @@ public class ViewPR extends javax.swing.JFrame {
         tablePR.setModel(tableModel);
         itemMap = FileOperation.getItemMap();
         
+        sorter = new TableRowSorter<>(tableModel);
+        tablePR.setRowSorter(sorter);
+        
         tablePR.getSelectionModel().addListSelectionListener(e -> {
         if (!e.getValueIsAdjusting()) {
             int row = tablePR.getSelectedRow();
@@ -212,6 +215,12 @@ public class ViewPR extends javax.swing.JFrame {
         );
 
         txtPRID.setEnabled(false);
+
+        txtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchActionPerformed(evt);
+            }
+        });
 
         btnUpdatePR.setBackground(new java.awt.Color(51, 204, 255));
         btnUpdatePR.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -521,6 +530,10 @@ public class ViewPR extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "You are not authorized to create a PR.", "Access Denied", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnCreateNewActionPerformed
+
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
+
+    }//GEN-LAST:event_txtSearchActionPerformed
 
     /**
      * @param args the command line arguments
