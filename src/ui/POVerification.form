@@ -292,7 +292,7 @@
                           <Component id="txtSupplierID" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtSupplierName" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="29" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -406,6 +406,9 @@
               </Properties>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="txtPurchaseDate">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtPurchaseDate.setEnabled(false);"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

@@ -161,7 +161,7 @@ public class SupplierEntry extends javax.swing.JFrame {
         btnCancel = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtDistance = new javax.swing.JTextField();
-        txtContactNumber = new javax.swing.JFormattedTextField();
+        txtContactNumber = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -322,11 +322,6 @@ public class SupplierEntry extends javax.swing.JFrame {
             }
         });
 
-        try {
-            txtContactNumber.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-#######")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
         txtContactNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtContactNumberActionPerformed(evt);
@@ -351,8 +346,8 @@ public class SupplierEntry extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(txtContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(32, 32, 32)
+                            .addComponent(txtContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(52, 52, 52)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtSupplierAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -540,7 +535,7 @@ public class SupplierEntry extends javax.swing.JFrame {
             sm.update(s1, supplierList);
             tblSupplier.setModel(sm.getSupplierTableModel());
 
-            JOptionPane.showMessageDialog(this, "Item updated successfully.");
+            JOptionPane.showMessageDialog(this, "Supplier updated successfully.");
             clearFields();
         } else {
             JOptionPane.showMessageDialog(this, "Update cancelled.");
@@ -576,7 +571,7 @@ public class SupplierEntry extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDistanceActionPerformed
 
     private void txtContactNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContactNumberActionPerformed
-
+        // TODO add your handling code here:
     }//GEN-LAST:event_txtContactNumberActionPerformed
 
     /**
@@ -633,7 +628,7 @@ public class SupplierEntry extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblSupplier;
-    private javax.swing.JFormattedTextField txtContactNumber;
+    private javax.swing.JTextField txtContactNumber;
     private javax.swing.JTextField txtDistance;
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtSupplierAddress;

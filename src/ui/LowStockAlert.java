@@ -5,6 +5,7 @@
 package ui;
 
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -22,13 +23,15 @@ public class LowStockAlert extends javax.swing.JFrame {
     private User user;
     private int originalQuantity;
     private TableRowSorter<DefaultTableModel> sorter;
+    private JFrame parentFrame;
 
 
     /**
      * Creates new form Generated_Stock_Report
      */
-    public LowStockAlert(User user) {
+    public LowStockAlert(User user, JFrame parentFrame) {
         this.user = user;
+        this.parentFrame = parentFrame;
         initComponents();
         setLocationRelativeTo(null);
         loadStockTable();
@@ -97,6 +100,7 @@ public class LowStockAlert extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         StockReport1 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
+        btnNotification = new javax.swing.JButton();
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/OSWBsmaller.png"))); // NOI18N
         jLabel14.setText("jLabel14");
@@ -170,6 +174,16 @@ public class LowStockAlert extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnNotification.setBackground(new java.awt.Color(15, 1, 71));
+        btnNotification.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnNotification.setForeground(new java.awt.Color(255, 255, 255));
+        btnNotification.setText("Manage Stock");
+        btnNotification.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNotificationActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -188,6 +202,8 @@ public class LowStockAlert extends javax.swing.JFrame {
                 .addContainerGap(39, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNotification, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -203,7 +219,9 @@ public class LowStockAlert extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnNotification, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BackBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
                 .addGap(12, 12, 12))
         );
 
@@ -228,6 +246,14 @@ public class LowStockAlert extends javax.swing.JFrame {
     private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
 
     }//GEN-LAST:event_SearchBtnActionPerformed
+
+    private void btnNotificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificationActionPerformed
+        this.dispose(); // dispose LowStockAlert
+        if (parentFrame != null) {
+            parentFrame.dispose(); // dispose InventoryManagerMenu
+        }
+        new ManageStock(user).setVisible(true);
+    }//GEN-LAST:event_btnNotificationActionPerformed
 
     /**
      * @param args the command line arguments
@@ -301,6 +327,7 @@ public class LowStockAlert extends javax.swing.JFrame {
     private javax.swing.JTextField SearchTf;
     private javax.swing.JLabel StockReport1;
     private javax.swing.JTable StockTbl;
+    private javax.swing.JButton btnNotification;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel31;

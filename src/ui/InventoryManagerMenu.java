@@ -258,7 +258,7 @@ public class InventoryManagerMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuit1ActionPerformed
 
     private void btnLowStockAlertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLowStockAlertActionPerformed
-        new LowStockAlert((InventoryManager) user).setVisible(true);
+        new LowStockAlert(user, this).setVisible(true);
     }//GEN-LAST:event_btnLowStockAlertActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

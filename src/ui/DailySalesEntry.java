@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
@@ -546,52 +548,49 @@ public class DailySalesEntry extends javax.swing.JFrame {
     }//GEN-LAST:event_AddButtonActionPerformed
 
     private void SubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitButtonActionPerformed
-         DefaultTableModel model = (DefaultTableModel) SalesTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) SalesTable.getModel();
+        System.out.println("model: " + model);
+        System.out.println("model.getRowCount: " + model.getRowCount());
+
+        Set<String> itemIdsInTable = new HashSet<>();
 
         for (int i = 0; i < model.getRowCount(); i++) {
             String itemId = model.getValueAt(i, 0).toString();
+            itemIdsInTable.add(itemId);
+            System.out.println("itemId: " + itemId);
+
             int soldQty = Integer.parseInt(model.getValueAt(i, 2).toString());
+            System.out.println("soldQty: " + soldQty);
 
             Item item = itemManager.findItemById(itemId);
             if (item != null) {
                 int updatedQty = item.getItemQty() - soldQty;
                 itemManager.updateQuantity(itemId, updatedQty);
-                model.setRowCount(0);
                 JOptionPane.showMessageDialog(null, "Sales submitted successfully. Inventory updated.");
             }
         }
-        
+
+        // Check only those items in the table for "Restock" status
         boolean lowStockFound = false;
 
-        try (BufferedReader br = new BufferedReader(new FileReader("Item.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 6 && parts[5].trim().equalsIgnoreCase("Restock")) {
-                    lowStockFound = true;
-                    break; // stop at first restock found
-                }
+        for (String itemId : itemIdsInTable) {
+            Item item = itemManager.findItemById(itemId);
+            if (item != null && "Restock".equalsIgnoreCase(item.getFlagStatus())) {
+                lowStockFound = true;
+                break;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error reading stock file.");
-            return;
         }
 
-        // If restock needed, prompt user
+        // Prompt user if low stock item is found
         if (lowStockFound) {
             int choice = JOptionPane.showConfirmDialog(null, "Item on low stock. Want to create PR?", "Low Stock Alert", JOptionPane.YES_NO_OPTION);
             if (choice == JOptionPane.YES_OPTION) {
                 this.dispose();
                 new CreatePR(user).setVisible(true);
-            } else {
-                SalesManagerMenu sm = new SalesManagerMenu(user);
-                this.dispose();
-                sm.setVisible(true);
             }
         }
-        
 
+        
     }//GEN-LAST:event_SubmitButtonActionPerformed
 
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed

@@ -1,7 +1,6 @@
 AM001,Joshua,123,Admin,014-7745555,joshua@mail.com
-PM001,Julie,123,Purchase Manager,012-1211444,julie@gmail.com
-SM001,Wei,1234,Sales Manager,019-7871444,wei@mail.com
-SM002,Chantalle,123,Sales Manager,019-7784444,chantalle@mail.com
-FM001,Wendy,123,Finance Manager,019-7784444,wennddy@gmail.com
-IM001,Tasha,123,Inventory Manager,017-7747774,tasha@mail.com
-PM002,Timothy,123,Purchase Manager,018-7747774,123@mail.com
+SM001,John,123,Sales Manager,015-4447777,john@gmail.com
+PM001,Peak Qi,123,Purchase Manager,015-8887777,peak@gmail.com
+IM001,Wong,123,Inventory Manager,019-8887777,wong@gmail.com
+FM001,Kai,123,Finance Manager,010-8887777,kai@gmail.com
+PM002,Maria,123,Purchase Manager,019-8887777,mariia@gmail.com

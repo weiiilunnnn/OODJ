@@ -1,22 +1,22 @@
-ITM001,Ipad,85,1200.0,5,OK
-ITM002,Phone Case,45,25.0,40,OK
-ITM003,Monitor,7,250.0,4,OK
+ITM001,Ipad,7,1200.0,5,OK
+ITM002,Phone Case,40,25.0,40,Restock
+ITM003,Monitor,4,250.0,4,Restock
 ITM004,Printer,10,400.0,5,OK
-ITM005,Laptop Stand,60,55.0,5,OK
-ITM006,Usb Hub,4,18.0,5,Restock
-ITM007,RGB Mouse,50,120.0,10,OK
-ITM008,Webcam,10,120.0,4,OK
+ITM005,Laptop Stand,2,55.0,5,Restock
+ITM006,Usb Hub,8,18.0,5,OK
+ITM007,Rgb Mouse,38,120.0,10,OK
+ITM008,Webcam,0,120.0,4,Restock
 ITM009,Drawing Tablet,45,320.0,3,OK
-ITM010,Phone Hanger,11,70.0,10,OK
+ITM010,Phone Hanger,5,70.0,10,Restock
 ITM011,Extension Cord,8,25.0,5,OK
 ITM012,Microphone,8,150.0,6,OK
-ITM013,Table Light,46,60.5,10,OK
+ITM013,Table Light,15,60.5,10,OK
 ITM014,Ergonomic Chair,7,950.0,5,OK
-ITM015,Lcd Cleaner,5,15.0,3,OK
-ITM016,Headphones,8,280.0,6,OK
+ITM015,Lcd Cleaner,1,15.0,3,Restock
+ITM016,Headphones,1,280.0,6,Restock
 ITM017,Desk Pad,81,10.0,5,OK
 ITM018,Flash Drive,20,35.0,10,OK
 ITM019,Graphics Card,5,1200.0,2,OK
-ITM020,Desktop Tower,10,1800.0,5,OK
+ITM020,Desktop Tower,0,1800.0,5,Restock
 ITM021,Iphone,50,2500.0,5,OK
 ITM022,Rtx,5,15000.0,2,OK
