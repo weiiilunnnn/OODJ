@@ -51,7 +51,7 @@ This project was built by fully applying **OOP principles**:
 |-------------------|----------------|
 | **Admin**         | Manage users, view all modules |
 | **Sales Manager** | Manage inventory, suppliers, daily sales, create PR |
-| **Purchase Manager** | Approve PR, generate PO, manage suppliers |
+| **Purchase Manager** | Approve PR, generate PO|
 | **Inventory Manager** | Track stock, generate stock reports |
 | **Finance Manager** | Approve/verify PO, process payments, financial reports |
 
